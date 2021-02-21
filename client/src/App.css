@@ -1,0 +1,30 @@
+.card-reddit {
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #fff;
+  border: 1px solid #d3d2d2;
+  font-size: 14px;
+}
+body {
+  background: #dae0e6;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.categories{
+  padding:10px 5px;
+}
+.categories:hover {
+  background-color: #dae0e6;
+}
+.community-thumbnail{
+  width: 40px;
+  height:40px;
+  border-radius:40px;
+}
+.community-img{
+  width: 80px;
+  height:80px;
+}
