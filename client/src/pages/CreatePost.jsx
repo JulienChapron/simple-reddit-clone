@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Container,
   DropdownButton,
@@ -6,21 +6,26 @@ import {
   Tabs,
   Tab,
 } from 'react-bootstrap';
+import { environmentContext } from '../contexts/Environment';
 import Post from '../components/createpost/Post';
 import ImageVideo from '../components/createpost/ImageVideo';
 import Link from '../components/createpost/Link';
+import { themeContext } from '../contexts/Theme';
 
 const CreatePost = () => {
   const [key, setKey] = useState('post');
   const [community, setCommunity] = useState(null)
+  const { environment } = useContext(environmentContext);
+  const { theme } = useContext(themeContext);
+
   return (
     <Container>
       <h4 className="mt-2">Create a post</h4>
       <DropdownButton
         className="mt-2"
-        variant="light"
+        variant={theme==='dark' ? 'outline-secondary' : 'light'}
         id="dropdown-basic-button"
-        title={community ? community : 'Choose a community'}
+        title={environment ? environment : 'Choose a community'}
       >
         <Dropdown.Item onClick={() => setCommunity('action')}>Action</Dropdown.Item>
         <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>

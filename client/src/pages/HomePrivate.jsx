@@ -18,7 +18,7 @@ const HomePrivate = () => {
           <div className="card-reddit">
             <p>Top communities by theme/finance/hack/tech (random)</p>
             <Link to="/communities">
-            <Button className="mr-1" variant="dark">
+            <Button className="m-1" variant="outline-secondary">
               View All
             </Button>
           </Link>

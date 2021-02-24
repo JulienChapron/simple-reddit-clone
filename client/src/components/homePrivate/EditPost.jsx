@@ -11,16 +11,17 @@ const EditPost = () => {
     <div>
       <InputGroup controlId="formBasicCreatePost">
         <Form.Control
+          className="theme-input"
           onClick={createPostFunc}
           type="text"
           placeholder="Create post"
         />
         <InputGroup.Append>
           <Link className="ml-2" to="/create-post">
-            <Button variant="dark">Image & video</Button>
+            <Button variant="outline-secondary">Image & video</Button>
           </Link>
           <Link className="ml-2" to="/create-post">
-            <Button variant="dark">Link</Button>
+            <Button variant="outline-secondary">Link</Button>
           </Link>
         </InputGroup.Append>
       </InputGroup>

@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Auth from './contexts/Auth';
+import Theme from './contexts/Theme';
 
 ReactDOM.render(
   <React.StrictMode>
     <Auth>
-      <App />
+      <Theme>
+      <App/>
+      </Theme>
     </Auth>
   </React.StrictMode>,
   document.getElementById('root')

@@ -32,6 +32,7 @@ const Post = (props) => {
     <div className="mt-3">
       <Form.Group controlId="formBasicPost">
         <Form.Control
+          className="theme-input"
           type="text"
           placeholder="Title"
           value={title}
@@ -40,6 +41,7 @@ const Post = (props) => {
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
         <Form.Control
+          className="theme-input"
           as="textarea"
           rows={3}
           placeholder="Text"
@@ -48,8 +50,8 @@ const Post = (props) => {
         />
       </Form.Group>
       <Button
+        variant="outline-secondary"
         disabled={!text || !title || !props.community ? true : false}
-        variant="primary"
         onClick={handleSubmit}
       >
         Post
