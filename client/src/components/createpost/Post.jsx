@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { authenticate } from '../../utils/RequestPrivate';
+import { environmentContext } from '../../contexts/Environment';
 
-const Post = (props) => {
+const Post = () => {
+  const { environment } = useContext(environmentContext);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const titleChange = (e) => {
@@ -12,9 +14,14 @@ const Post = (props) => {
     setText(e.target.value);
   };
   const handleSubmit = async () => {
+    let env = environment
+    env = env.split('/')
+    console.log(env, 'env')
+    env = env[env.length-1]
     const data = {
       title: title,
       text: text,
+      community: env,
     };
     try {
       const response = await authenticate('posts/', data);
@@ -51,7 +58,7 @@ const Post = (props) => {
       </Form.Group>
       <Button
         variant="outline-secondary"
-        disabled={!text || !title || !props.community ? true : false}
+        disabled={!text || !title || !environment ? true : false}
         onClick={handleSubmit}
       >
         Post

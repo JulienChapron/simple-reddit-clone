@@ -38,7 +38,7 @@ const CreatePost = () => {
           onSelect={(k) => setKey(k)}
         >
           <Tab eventKey="post" title="Post">
-            <Post community={community}/>
+            <Post/>
           </Tab>
           <Tab eventKey="imageVideo" title="Image & Video">
             <ImageVideo />

@@ -7,7 +7,6 @@ const Auth = ({ children }) => {
     setAuth({ data:user.data, token: user.token});
   };
   useEffect(() => {
-    console.log(JSON.parse(window.localStorage.getItem('user')), 'JSON.parse(window.localStorage.getItem())')
     if(JSON.parse(window.localStorage.getItem('user'))!==null)
     setAuth(JSON.parse(window.localStorage.getItem('user')));
     else {

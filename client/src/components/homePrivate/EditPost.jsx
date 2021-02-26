@@ -7,6 +7,8 @@ const EditPost = () => {
   const createPostFunc = () => {
     history.push('/create-post');
   };
+  
+
   return (
     <div>
       <InputGroup controlId="formBasicCreatePost">
