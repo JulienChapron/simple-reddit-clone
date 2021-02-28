@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const client = async (endpoint, { body, ...customConfig } = {}) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const config = {
@@ -33,8 +31,11 @@ export const authenticate = async (type, data) => {
     if (response.token) {
       const token = response.token;
       const data = await client(`${backendUrl}/auth/me`, { token });
-      localStorage.setItem('user', JSON.stringify({data:data, token:token }));
-      return { data:data, token:token };
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ data: data, token: token })
+      );
+      return { data: data, token: token };
     } else if (response.error) {
       return response.error;
     } else {

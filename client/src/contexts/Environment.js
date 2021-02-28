@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 export const environmentContext = createContext({});
 
 const Environment = ({ children }) => {
-  const [environment, setEnvironment] = useState('Home');
+  const [environment, setEnvironment] = useState('');
   const setEnvironmentContext = (environment) => {
     setEnvironment(environment);
   };

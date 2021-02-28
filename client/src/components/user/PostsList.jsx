@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getPublic } from '../../utils/RequestPublic';
 
 const PostsList = (props) => {
@@ -6,7 +6,6 @@ const PostsList = (props) => {
   const getPosts = async () => {
     try {
       const response = await getPublic('posts/' + props.environment);
-      console.log(response.data, 'response posts');
       setPosts(response.data);
     } catch (error) {
       console.log(error);
@@ -14,7 +13,7 @@ const PostsList = (props) => {
   };
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [props.environment]);
   return (
     <div>
       {posts.map((post, index) => {

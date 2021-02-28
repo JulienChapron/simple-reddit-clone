@@ -2,8 +2,10 @@ import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { authenticate } from '../../utils/RequestPrivate';
 import { environmentContext } from '../../contexts/Environment';
+import { useHistory } from 'react-router-dom';
 
 const Post = () => {
+  let history = useHistory();
   const { environment } = useContext(environmentContext);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -16,7 +18,6 @@ const Post = () => {
   const handleSubmit = async () => {
     let env = environment
     env = env.split('/')
-    console.log(env, 'env')
     env = env[env.length-1]
     const data = {
       title: title,
@@ -25,9 +26,8 @@ const Post = () => {
     };
     try {
       const response = await authenticate('posts/', data);
-      if (response.token) {
-        history.push('/');
-        setAuthToken(response);
+      if (response.data) {
+        history.push('/'+ environment);
       } else {
         setError(response);
       }

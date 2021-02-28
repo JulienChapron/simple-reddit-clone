@@ -75,4 +75,12 @@ body {
   width: 80px;
   height:80px;
 }
+.user-avatar{
+  width:80px;
+  height:80x;
+  border-radius:100%;
+}
+.hidden {
+  display: none;
+}
   `;
