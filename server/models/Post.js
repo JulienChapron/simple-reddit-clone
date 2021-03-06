@@ -12,14 +12,9 @@ const PostSchema = new Schema(
       type: String,
       default: ''
     },
-    status: {
+    community:{
       type: String,
-      enum: ['draft', 'private', 'public'],
-      default: 'draft'
-    },
-    categoryId: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Category'
+      default: null
     },
     userId: {
       type: mongoose.Schema.ObjectId,
@@ -32,6 +27,13 @@ const PostSchema = new Schema(
 
 PostSchema.index({ title: 'text' })
 
+PostSchema.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'postId',
+  justOne: false,
+  count: true
+})
 /* VideoSchema.virtual('dislikes', {
   ref: 'Feeling',
   localField: '_id',
@@ -48,14 +50,6 @@ VideoSchema.virtual('likes', {
   justOne: false,
   count: true,
   match: { type: 'like' }
-})
-
-VideoSchema.virtual('comments', {
-  ref: 'Comment',
-  localField: '_id',
-  foreignField: 'videoId',
-  justOne: false,
-  count: true
 }) */
 
 module.exports = mongoose.model('Post', PostSchema)

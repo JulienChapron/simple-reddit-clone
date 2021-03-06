@@ -12,19 +12,33 @@ const PostsList = (props) => {
     }
   };
   useEffect(() => {
-    getPosts();
+    if (props.environment) getPosts();
   }, [props.environment]);
   return (
     <div>
-      {posts.map((post, index) => {
-        return (
-          <div className="card-reddit">
-            <p>{post.title}</p>
-            <p>{post.userId}</p>
-            <p>{post.text}</p>
-          </div>
-        );
-      })}
+      {posts.length
+        ? posts.map((post, index) => {
+            return (
+              <div
+                key={index}
+                style={{ padding: '5px' }}
+                className="card-reddit"
+              >
+                <p
+                  style={{
+                    fontSize: '12px',
+                    color: 'grey',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Posted by user/{post.userId}
+                </p>
+                <p>{post.title}</p>
+                <p>{post.text}</p>
+              </div>
+            );
+          })
+        : `hmm... ${props.environment} hasn't posted anything`}
     </div>
   );
 };

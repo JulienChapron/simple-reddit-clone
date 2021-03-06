@@ -38,22 +38,32 @@ const NavigationPrivate = () => {
     }
   };
   return (
-    <Navbar variant={theme==='light' ? 'light' :'dark'} bg={theme==='light' ? 'light' :'dark'}  expand="lg">
+    <Navbar
+      variant={theme === 'light' ? 'light' : 'dark'}
+      bg={theme === 'light' ? 'light' : 'dark'}
+      expand="lg"
+    >
       <Link className="" to="/">
         <Navbar.Brand>Simple Reddit Clone</Navbar.Brand>
       </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav bg={theme==='light' ? 'light' :'dark'}>
-          <NavDropdown  title={environment} id="basic-nav-dropdown">
-            <NavDropdown.Item>Home</NavDropdown.Item>
+        <Nav bg={theme === 'light' ? 'light' : 'dark'}>
+          <NavDropdown title={environment} id="basic-nav-dropdown">
+            <NavDropdown.Item as={Link} to={'/'}>
+              Home
+            </NavDropdown.Item>
             <NavDropdown.Item>Popular</NavDropdown.Item>
             <NavDropdown.Item>All</NavDropdown.Item>
             <NavDropdown.Item>Top communities</NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Form  inline>
-          <FormControl type="text" placeholder="Search" className="theme-input mr-sm-2" />
+        <Form inline>
+          <FormControl
+            type="text"
+            placeholder="Search"
+            className="theme-input mr-sm-2"
+          />
         </Form>
         <Nav className="ml-auto">
           <Link to="/create-community">
@@ -67,12 +77,12 @@ const NavigationPrivate = () => {
             </Button>
           </Link>
           <NavDropdown
-            alignRight="false"
+            alignRight
             title={auth.data.data.username}
             id="basic-nav-dropdown"
           >
             <NavDropdown.Item as={Link} to={'/user/' + auth.data.data.username}>
-              User
+              Profile
             </NavDropdown.Item>
             <div className="switch">
               Night Mode

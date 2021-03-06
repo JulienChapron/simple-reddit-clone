@@ -1,30 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import categories from '../assets/categories/Categories';
 import { getPublic } from '../utils/RequestPublic';
-import default_thumbnail_community from '../assets/img_default/default_thumbnail_community.jpeg';
 import { Link } from 'react-router-dom';
+import CommunitiesRandom from '../components/CommunitiesRandom';
+import categories from '../assets/categories/Categories';
 
 const Communities = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [communities, setCommunities] = useState([]);
-  const [communitiesRandom, setCommunitiesRandom] = useState([]);
-  const [categoryRandom, setCategoryRandom] = useState(null);
   const getCommunitiesByCategory = async (category) => {
     try {
       const response = await getPublic('communities/category/' + category);
       setCommunities(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getCommunitiesRandom = async () => {
-    try {
-      const random = categories[Math.floor(Math.random() * categories.length)];
-      setCategoryRandom(random);
-      const response = await getPublic(
-        'communities/category/' + random.toLowerCase()
-      );
-      setCommunitiesRandom(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -39,24 +26,28 @@ const Communities = () => {
   };
   useEffect(() => {
     getCommunities();
-    getCommunitiesRandom();
   }, []);
   return (
     <Container>
       <Row>
         <Col lg={2} md={12} sm={12}>
           <div className="card-reddit">
-            Categories
+            <h5>Categories</h5>
             <hr />
-            {['All Communities', ...categories].map((category, index) => {
+            {['All Categories', ...categories].map((category, index) => {
               return (
                 <div
                   key={index}
-                  className="pointer categories"
+                  className={
+                    category === selectedCategory
+                      ? 'selected-category pointer'
+                      : 'pointer category'
+                  }
                   onClick={() =>
-                    category !== 'All Communities'
-                      ? getCommunitiesByCategory(category.toLowerCase())
-                      : getCommunities()
+                    category !== 'All Categories'
+                      ? getCommunitiesByCategory(category.toLowerCase()) &&
+                        setSelectedCategory(category)
+                      : getCommunities() && setSelectedCategory(category)
                   }
                 >
                   {category}
@@ -67,18 +58,18 @@ const Communities = () => {
         </Col>
         <Col lg={6} md={12} sm={12}>
           <div className="card-reddit">
-            Today's Top Growing Communities
+            <h5>Today's Top Growing Communities</h5>
             <hr />
             {Object.values(communities).map((community, index) => {
               return (
-                <Link to={`/r/${community._id}`}>
+                <Link to={`/subreddit/${community.subreddit}`}>
                   <div key={index} className="pointer categories">
                     <img
                       className="community-thumbnail"
-                      src={default_thumbnail_community}
+                      src={`http://localhost:4000/uploads/communities/photo/${community.photoUrl}`}
                       alt="img-default"
                     />{' '}
-                    r/{community.title}
+                    subreddit/{community.subreddit}
                   </div>
                 </Link>
               );
@@ -86,24 +77,8 @@ const Communities = () => {
           </div>
         </Col>
         <Col lg={4} md={12} sm={12}>
-          {
-            <div className="card-reddit">
-              {categoryRandom}
-              <hr />
-              {Object.values(communitiesRandom).map((community, index) => {
-                return (
-                  <div key={index} className="pointer categories">
-                    <img
-                      className="community-thumbnail"
-                      src={default_thumbnail_community}
-                      alt="img-default"
-                    />{' '}
-                    r/{community.title}
-                  </div>
-                );
-              })}
-            </div>
-          }
+          <CommunitiesRandom />
+          <CommunitiesRandom />
         </Col>
       </Row>
     </Container>

@@ -16,9 +16,13 @@ const Post = () => {
     setText(e.target.value);
   };
   const handleSubmit = async () => {
-    let env = environment
-    env = env.split('/')
-    env = env[env.length-1]
+    let env = environment;
+    env = env.split('/');
+    if (env[0] === 'user') {
+      env = null;
+    } else {
+      env = env[env.length - 1];
+    }
     const data = {
       title: title,
       text: text,
@@ -27,7 +31,7 @@ const Post = () => {
     try {
       const response = await authenticate('posts/', data);
       if (response.data) {
-        history.push('/'+ environment);
+        history.push('/' + environment);
       } else {
         setError(response);
       }

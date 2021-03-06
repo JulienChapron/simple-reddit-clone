@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 export const getPublic = async (endpoint) => {
   const backendUrl = 'http://localhost:4000/api/v1/'+endpoint;

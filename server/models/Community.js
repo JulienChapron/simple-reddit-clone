@@ -1,40 +1,45 @@
-const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
+const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const CommunitySchema = new Schema(
   {
+    subreddit: {
+      type: String,
+      minlength: [3, "Subreddit must be three characters long"],
+      required: [true, "Subreddit is required"],
+    },
     title: {
       type: String,
-      minlength: [3, 'Title must be three characters long'],
+      minlength: [3, "Title must be three characters long"],
       trim: true,
       unique: true,
       uniqueCaseInsensitive: true,
-      required: [true, 'Title is required'],
+      required: [true, "Title is required"],
     },
     description: {
       type: String,
-      minlength: [3, 'Description must be three characters long'],
-      required: [true, 'Description is required'],
+      minlength: [3, "Description must be three characters long"],
+      required: [true, "Description is required"],
     },
     category: {
       type: String,
-      required: [true, 'Category is required'],
+      required: [true, "Category is required"],
     },
     photoUrl: {
       type: String,
-      default: 'no-photo.jpg'
+      default: "no-photo.jpeg",
     },
     userId: {
       type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
   },
   { timestamps: true }
-)
+);
 
-CommunitySchema.plugin(uniqueValidator, { message: '{PATH} already exists.' })
+CommunitySchema.plugin(uniqueValidator, { message: "{PATH} already exists." });
 
-module.exports = mongoose.model('Community', CommunitySchema)
+module.exports = mongoose.model("Community", CommunitySchema);

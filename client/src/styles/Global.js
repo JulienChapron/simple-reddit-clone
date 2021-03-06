@@ -7,9 +7,15 @@ export const GlobalStyles = createGlobalStyle`
   }
   a{
     color: ${({ theme }) => theme.text};
+    text-decoration: none;
   }
   a:hover{
     color: ${({ theme }) => theme.text};
+    text-decoration: none;
+  }
+  h5{
+    font-size:16px;
+    font-weight:bold;
   }
 body {
     background: ${({ theme }) => theme.body};
@@ -60,11 +66,19 @@ body {
 .pointer {
   cursor: pointer;
 }
-.categories{
+.category{
   padding:10px 5px;
+  cursor: pointer;
 }
-.categories:hover {
+.category:hover {
   background-color: #dae0e6;
+  cursor: pointer;
+}
+.selected-category{
+  padding:10px 5px;
+  cursor: pointer;
+  background-color: #dae0e6;
+  border-left:2px solid black;
 }
 .community-thumbnail{
   width: 40px;
@@ -75,12 +89,12 @@ body {
   width: 80px;
   height:80px;
 }
-.user-avatar{
-  width:80px;
-  height:80x;
-  border-radius:100%;
-}
 .hidden {
   display: none;
+}
+.icon{
+  width:30px;
+  height:30px;
+  padding:5px;
 }
   `;

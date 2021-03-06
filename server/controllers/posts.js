@@ -1,42 +1,66 @@
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
-
+const Community = require("../models/Community");
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 // @desc    Get videos
 // @route   GET /api/v1/videos/public or /api/v1/videos/private
 // @access  Public Or Private
-exports.getPosts = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+exports.getPostsUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ username: req.params.username });
+  if (!user)
+    return next(
+      new ErrorResponse(`No user with username of ${req.params.username}`, 404)
+    );
+  const posts = await Post.where("userId", user._id).sort("-createdAt");
+  if (!posts) {
+    return next(
+      new ErrorResponse(`No category with id of ${req.body.categoryId}`, 404)
+    );
+  }
+  console.log(posts, 'posts');
+  res.status(200).json({ success: true, data: posts });
+});
+
+// @desc    Get videos
+// @route   GET /api/v1/videos/public or /api/v1/videos/private
+// @access  Public Or Private
+exports.getPostsCommunity = asyncHandler(async (req, res, next) => {
+  const posts = await Post.where("community", req.params.subreddit).sort(
+    "-createdAt"
+  );
+  if (!posts) {
+    return next(
+      new ErrorResponse(`No category with id of ${req.body.categoryId}`, 404)
+    );
+  }
+  res.status(200).json({ success: true, data: posts });
 });
 
 // @desc    add post
 // @route   POST /api/v1/posts/
 // @access  Private
 exports.createPost = asyncHandler(async (req, res, next) => {
-  let category = await Post.findOne({
-    _id: req.body.categoryId,
-    status: 'public'
-  })
+  const community = await Community.where("title", req.body.title);
 
-  if (!category) {
+  if (!community) {
     return next(
-      new ErrorResponse(`No category with id of ${req.body.categoryId}`, 404)
-    )
+      new ErrorResponse(`No community with title of ${req.body.title}`, 404)
+    );
   }
   const post = await Post.create({
     ...req.body,
-    userId: req.user._id
-  })
-
-  return res.status(200).json({ sucess: true, data: post })
-})
+    userId: req.user._id,
+  });
+  return res.status(200).json({ sucess: true, data: post });
+});
 
 // @desc    Get single post
 // @route   GET /api/v1/videos/:id
 // @access  Public
 exports.getPost = asyncHandler(async (req, res, next) => {
-  const post = await Post.findById(req.params.id)
+  const post = await Post.where("title", req.body.title)
     .populate({
       path: "categoryId",
     })
@@ -51,18 +75,17 @@ exports.getPost = asyncHandler(async (req, res, next) => {
   res.status(200).json({ sucess: true, data: post });
 });
 
-
 // @desc    Update post
 // @route   PUT /api/v1/posts/:id
 // @access  Private
-exports.updatePost = asyncHandler(async (req, res, next) => {
+exports.putPost = asyncHandler(async (req, res, next) => {
   const post = await Video.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
 
   if (!post)
-    return next(new ErrorResponse(`No video with that id of ${req.params.id}`));
+    return next(new ErrorResponse(`No post with that id of ${req.params.id}`));
 
   res.status(200).json({ success: true, data: post });
 });
@@ -70,8 +93,8 @@ exports.updatePost = asyncHandler(async (req, res, next) => {
 // @desc    Delete post
 // @route   DELETE /api/v1/posts/:id
 // @access  Private
-exports.deleteVideo = asyncHandler(async (req, res, next) => {
-  let post = await Video.findOne({ userId: req.user._id, _id: req.params.id });
+exports.deletePost = asyncHandler(async (req, res, next) => {
+  let post = await Video.where("title", req.body.title);
 
   if (!post) {
     return next(new ErrorResponse(`No post with id of ${req.params.id}`, 404));

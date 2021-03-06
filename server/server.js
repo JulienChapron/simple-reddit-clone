@@ -23,6 +23,7 @@ const authRoutes = require('./routes/auth')
 const postsRoutes = require('./routes/posts')
 const communitiesRoutes = require('./routes/communities')
 const usersRoutes = require('./routes/users')
+const commentsRoutes = require('./routes/comments')
 
 const app = express()
 app.use(express.json())
@@ -32,12 +33,13 @@ app.use(cookieParser())
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-/* app.use(
+
+// File uploading
+app.use(
   fileupload({
     createParentPath: true
   })
-) */
-
+)
 
 app.use(mongoSanitize())
 app.use(helmet())
@@ -52,6 +54,7 @@ app.use(versionOne('auth'), authRoutes)
 app.use(versionOne('posts'), postsRoutes)
 app.use(versionOne('communities'), communitiesRoutes)
 app.use(versionOne('users'), usersRoutes)
+app.use(versionOne('comments'), commentsRoutes)
 
 app.use(errorHandler)
 

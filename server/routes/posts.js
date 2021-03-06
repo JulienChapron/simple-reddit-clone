@@ -1,22 +1,26 @@
-const express = require('express')
+const express = require("express");
 const {
-  getPosts,
+  getPostsCommunity,
+  getPostsUser,
   getPost,
   createPost,
   putPost,
-  deletePost
-} = require('../controllers/posts')
+  deletePost,
+} = require("../controllers/posts");
 
-const Post = require('../models/Post')
+const router = express.Router();
+const advancedResults = require("../middleware/advancedResults");
+const { protect } = require("../middleware/auth");
 
-const router = express.Router()
-
-const advancedResults = require('../middleware/advancedResults')
-const { protect } = require('../middleware/auth')
-
-router.post('/', protect, createPost)
-
-router.route('/private').get(
+router.post("/", protect, createPost);
+router.route("/user/:username").get(getPostsUser);
+router.route("/subreddit/:subreddit").get(getPostsCommunity);
+router
+  .route("/:id")
+  .get(getPost)
+  .put(protect, putPost)
+  .delete(protect, deletePost);
+/* router.route('/private').get(
   protect,
   advancedResults(
     Post,
@@ -32,9 +36,9 @@ router.route('/private').get(
     }
   ),
   getPosts
-)
+) */
 
-router
+/* router
   .route('/public')
   .get(
     advancedResults(
@@ -49,11 +53,6 @@ router
     ),
     getPosts
   )
+*/
 
-router
-  .route('/:id')
-  .get(getPost)
-  /* .put(protect, putPost)
-  .delete(protect, deletePost) */
-
-module.exports = router
+module.exports = router;

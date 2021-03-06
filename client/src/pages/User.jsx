@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import EditPost from '../components/homePrivate/EditPost';
 import PostsList from '../components/user/PostsList';
 import UserCard from '../components/user/UserCard';
 import { environmentContext } from '../contexts/Environment';
@@ -20,9 +19,6 @@ const User = () => {
       <div>
         <Row>
           <Col lg={8} md={12} sm={12}>
-            <div className="card-reddit">
-              <EditPost />
-            </div>
             <div className="card-reddit">
               <PostsList environment={environment}/>
             </div>

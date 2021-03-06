@@ -30,7 +30,7 @@ const RoutesPublic = () => (
       <Route exact path="/communities">
         <Communities />
       </Route>
-      <Route exact path="/r/:id">
+      <Route exact path="/subreddit/:subreddit">
         <Community />
       </Route>
       <Route exact path="/user/:username">

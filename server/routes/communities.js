@@ -3,6 +3,7 @@ const {
   getCommunities,
   getCommunitiesByCategory,
   getCommunity,
+  uploadImage,
   createCommunity,
   updateCommunity,
   deleteCommunity,
@@ -21,11 +22,14 @@ router
   .get(advancedResults(Community), getCommunities)
   .post(protect, createCommunity);
 
+router.route('/:subreddit/image').post( uploadImage)
+
 router
-  .route("/:id")
+  .route("/:subreddit")
   .get(getCommunity)
   .put(updateCommunity)
   .delete(deleteCommunity);
+
 
 router.route("/category/:category").get(getCommunitiesByCategory);
 

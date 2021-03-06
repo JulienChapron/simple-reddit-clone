@@ -1,40 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
-import { getPublic } from '../utils/RequestPublic';
-import { Link } from 'react-router-dom';
-import default_community from '../assets/img_default/default_thumbnail_community.jpeg';
+import CommunityCard from '../components/community/CommunityCard';
+import { environmentContext } from '../contexts/Environment';
+import PostsList from '../components/user/PostsList';
 
 const Community = () => {
-  const [community, setCommunity] = useState('');
-  const getCommunity = async () => {
+  const { environment, setEnvironmentContext } = useContext(environmentContext);
+  const env = () => {
     const params = window.location.href.split('/');
-    const idCategory = params[params.length-1];
-    try {
-      const response = await getPublic('communities/' + idCategory);
-      setCommunity(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    const subreddit = params[params.length - 1];
+    setEnvironmentContext('subreddit/' + subreddit);
   };
   useEffect(() => {
-    getCommunity();
+    env();
   }, []);
   return (
     <Container>
       <Row>
         <Col lg={8} md={12} sm={12}>
-          <div className="card-reddit">getPostByIdCommunity</div>
+          <div className="card-reddit">
+            <PostsList environment={environment} />
+          </div>
         </Col>
         <Col lg={4} md={12} sm={12}>
-          <div className="card-reddit">
-            <img className="community-img" src={default_community} alt="image-community"/>
-            <p>{community.title}</p>
-            <Link to="/create-post">
-            <Button block className="mr-1" variant="dark">
-              Create Post
-            </Button>
-          </Link>
-          </div>
+          <CommunityCard />
         </Col>
       </Row>
     </Container>

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Container,
   DropdownButton,
@@ -14,7 +14,7 @@ import { themeContext } from '../contexts/Theme';
 
 const CreatePost = () => {
   const [key, setKey] = useState('post');
-  const [community, setCommunity] = useState(null)
+  const [community, setCommunity] = useState(null);
   const { environment } = useContext(environmentContext);
   const { theme } = useContext(themeContext);
 
@@ -23,13 +23,12 @@ const CreatePost = () => {
       <h4 className="mt-2">Create a post</h4>
       <DropdownButton
         className="mt-2"
-        variant={theme==='dark' ? 'outline-secondary' : 'light'}
+        variant={theme === 'dark' ? 'outline-secondary' : 'light'}
         id="dropdown-basic-button"
         title={environment ? environment : 'Choose a community'}
       >
-        <Dropdown.Item onClick={() => setCommunity('action')}>Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <Dropdown.Header>Profile</Dropdown.Header>
+        <Dropdown.Item>{environment}</Dropdown.Item>
       </DropdownButton>
       <div className="card-reddit">
         <Tabs
@@ -38,7 +37,7 @@ const CreatePost = () => {
           onSelect={(k) => setKey(k)}
         >
           <Tab eventKey="post" title="Post">
-            <Post/>
+            <Post />
           </Tab>
           <Tab eventKey="imageVideo" title="Image & Video">
             <ImageVideo />
