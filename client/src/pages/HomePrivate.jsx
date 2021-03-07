@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import EditPost from '../components/homePrivate/EditPost';
 import CommunitiesRandom from '../components/CommunitiesRandom';
 import categories from '../assets/categories/Categories';
 import { getPublic } from '../utils/RequestPublic';
+import { environmentContext } from '../contexts/Environment';
 
 const HomePrivate = () => {
-  const [communities, setCommunities] = useState([]);
+  const { environment, setEnvironmentContext } = useContext(environmentContext);
   const [communitiesRandom, setCommunitiesRandom] = useState([]);
   const [categoryRandom, setCategoryRandom] = useState(null);
-  const getCommunitiesByCategory = async (category) => {
-    try {
-      const response = await getPublic('communities/category/' + category);
-      setCommunities(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const getEnv = () => {
+    setEnvironmentContext('Home');
   };
   const getCommunitiesRandom = async () => {
     try {
@@ -29,17 +25,9 @@ const HomePrivate = () => {
       console.log(error);
     }
   };
-  const getCommunities = async () => {
-    try {
-      const response = await getPublic('communities/');
-      setCommunities(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    getCommunities();
     getCommunitiesRandom();
+    getEnv();
   }, []);
 
   return (
@@ -54,6 +42,7 @@ const HomePrivate = () => {
         </Col>
         <Col lg={4} md={6} sm={12}>
           <CommunitiesRandom
+            environment={environment}
             categoryRandom={categoryRandom}
             communitiesRandom={communitiesRandom}
           />

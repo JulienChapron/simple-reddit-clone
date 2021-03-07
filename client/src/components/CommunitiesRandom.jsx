@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getPublic } from '../utils/RequestPublic';
 import categories from '../assets/categories/Categories';
 
-const CommunitiesRandom = () => {
+const CommunitiesRandom = (props) => {
   const [communitiesRandom, setCommunitiesRandom] = useState([]);
   const [categoryRandom, setCategoryRandom] = useState([]);
   const getCommunitiesRandom = async () => {
@@ -65,15 +65,27 @@ const CommunitiesRandom = () => {
             <p style={{ color: 'grey' }}>no communities</p>
           )}
         </div>
-        <Button
-          className="mt-2"
-          as={Link}
-          to="/communities"
-          block
-          variant="outline-secondary"
-        >
-          See All {categoryRandom}
-        </Button>
+        {props.environment !== 'Home' ? (
+          <Button
+            className="mt-2"
+            as={Link}
+            to="/communities"
+            block
+            variant="outline-secondary"
+          >
+            See All {categoryRandom}
+          </Button>
+        ) : (
+          <Button
+            as={Link}
+            to="/communities"
+            block
+            variant="outline-secondary"
+            className="mt-2"
+          >
+            View All
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import { authenticate } from '../../utils/RequestPrivate';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import penIcon from '../../assets/icons/pen.png';
+import Moment from 'react-moment';
+
 const UserCard = (props) => {
   const [user, setUser] = useState(null);
   const [url, setUrl] = useState(null);
@@ -28,7 +30,7 @@ const UserCard = (props) => {
     formData.append('image', e.target.files[0]);
     const config = {
       headers: {
-        'authorization':`Bearer ${user.token}`,
+        authorization: `Bearer ${user.token}`,
         'content-type': 'multipart/form-data',
       },
     };
@@ -87,13 +89,17 @@ const UserCard = (props) => {
               onChange={onChangeUpload}
             />
 
-            <p className="font-weight-bold">{user.username}</p>
+            <p>user/{user.username}</p>
+            <p style={{ fontWeight: 'bold' }}>Cake Day</p>
+            <Moment format="YYYY/MM/DD" local>
+              {user.createdAt}
+            </Moment>
             <div style={{ width: '100%' }}></div>
             <Button
               as={Link}
               to="/create-post"
               block
-              className="mr-1"
+              className="mt-2"
               variant="outline-secondary"
             >
               Create Post
