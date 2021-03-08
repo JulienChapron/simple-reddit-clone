@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  getPostsCommunity,
+  getPostsSubreddit,
   getPostsUser,
   getPost,
   createPost,
@@ -14,7 +14,7 @@ const { protect } = require("../middleware/auth");
 
 router.post("/", protect, createPost);
 router.route("/user/:username").get(getPostsUser);
-router.route("/subreddit/:subreddit").get(getPostsCommunity);
+router.route("/subreddit/:subreddit").get(getPostsSubreddit);
 router
   .route("/:id")
   .get(getPost)

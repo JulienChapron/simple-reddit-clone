@@ -56,12 +56,12 @@ body {
   .categories:hover {
     background-color: #dae0e6;
   }
-  .community-thumbnail{
+  .subreddit-thumbnail{
     width: 40px;
     height:40px;
     border-radius:40px;
   }
-  .community-img{
+  .subreddit-img{
     width: 80px;
     height:80px;
   }
@@ -83,12 +83,12 @@ body {
   background-color: #dae0e6;
   border-left:2px solid black;
 }
-.community-thumbnail{
+.subreddit-thumbnail{
   width: 40px;
   height:40px;
   border-radius:40px;
 }
-.community-img{
+.subreddit-img{
   width: 80px;
   height:80px;
 }

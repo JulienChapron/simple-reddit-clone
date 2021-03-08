@@ -2,15 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // components
-import NavigationPrivate from '../components/navigations/NavigationPrivate';
+import NavigationPrivate from '../components/NavigationPrivate';
 // styles
 
 // pages
 import HomePrivate from '../pages/HomePrivate';
 import CreatePost from '../pages/CreatePost';
-import CreateCommunity from '../pages/CreateCommunity';
-import Communities from '../pages/Communities';
-import Community from '../pages/Community';
+import CreateSubreddit from '../pages/CreateSubreddit';
+import Subreddits from '../pages/Subreddits';
+import Subreddit from '../pages/Subreddit';
 import User from '../pages/User';
 import RedirectAuth from './RedirectAuth';
 
@@ -24,14 +24,14 @@ const RoutesPublic = () => (
       <Route exact path="/create-post">
         <CreatePost />
       </Route>
-      <Route exact path="/create-community">
-        <CreateCommunity />
+      <Route exact path="/create-subreddit">
+        <CreateSubreddit />
       </Route>
-      <Route exact path="/communities">
-        <Communities />
+      <Route exact path="/subreddits">
+        <Subreddits />
       </Route>
       <Route exact path="/subreddit/:subreddit">
-        <Community />
+        <Subreddit />
       </Route>
       <Route exact path="/user/:username">
         <User />

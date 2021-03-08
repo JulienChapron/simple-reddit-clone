@@ -12,8 +12,9 @@ const PostSchema = new Schema(
       type: String,
       default: ''
     },
-    community:{
+    subreddit:{
       type: String,
+      ref: 'Subreddit',
       default: null
     },
     userId: {
@@ -26,6 +27,21 @@ const PostSchema = new Schema(
 )
 
 PostSchema.index({ title: 'text' })
+
+PostSchema.virtual('users', {
+  ref: 'User',
+  localField: 'userId',
+  foreignField: '_id',
+  justOne: false,
+  count: true
+})
+
+PostSchema.virtual('subreddits', {
+  ref: 'Subreddit',
+  localField: 'subreddit',
+  foreignField: 'subreddit',
+  justOne: false
+})
 
 PostSchema.virtual('comments', {
   ref: 'Comment',

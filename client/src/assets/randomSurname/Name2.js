@@ -51,7 +51,7 @@ export const name2 = [
     'media',
     'thing',
     'oven',
-    'community',
+    'subreddit',
     'definition',
     'safety',
     'quality',

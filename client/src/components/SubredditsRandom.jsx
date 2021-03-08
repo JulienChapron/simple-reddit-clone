@@ -4,23 +4,23 @@ import { Link } from 'react-router-dom';
 import { getPublic } from '../utils/RequestPublic';
 import categories from '../assets/categories/Categories';
 
-const CommunitiesRandom = (props) => {
-  const [communitiesRandom, setCommunitiesRandom] = useState([]);
+const SubredditsRandom = (props) => {
+  const [subredditsRandom, setSubredditsRandom] = useState([]);
   const [categoryRandom, setCategoryRandom] = useState([]);
-  const getCommunitiesRandom = async () => {
+  const getSubredditsRandom = async () => {
     try {
       const random = categories[Math.floor(Math.random() * categories.length)];
       setCategoryRandom(random);
       const response = await getPublic(
-        'communities/category/' + random.toLowerCase()
+        'subreddits/category/' + random.toLowerCase()
       );
-      setCommunitiesRandom(response.data);
+      setSubredditsRandom(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getCommunitiesRandom();
+    getSubredditsRandom();
   }, []);
   return (
     <div style={{ padding: '0px' }} className="card-reddit">
@@ -28,7 +28,7 @@ const CommunitiesRandom = (props) => {
         <div
           style={{
             backgroundImage:
-              'url(http://localhost:4000/uploads/communities/background/no-background.jpeg)',
+              'url(http://localhost:4000/uploads/subreddits/background/no-background.jpeg)',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             height: '100%',
@@ -48,28 +48,28 @@ const CommunitiesRandom = (props) => {
       </div>
       <div className="p-2">
         <div>
-          {communitiesRandom.length ? (
-            Object.values(communitiesRandom).map((community, index) => {
+          {subredditsRandom.length ? (
+            Object.values(subredditsRandom).map((subreddit, index) => {
               return (
                 <div key={index} className="pointer categories">
                   <img
-                    className="community-thumbnail"
-                    src={`http://localhost:4000/uploads/communities/photo/${community.photoUrl}`}
+                    className="subreddit-thumbnail"
+                    src={`http://localhost:4000/uploads/subreddits/photo/${subreddit.photoUrl}`}
                     alt="img-default"
                   />{' '}
-                  subreddit/{community.subreddit}
+                  subreddit/{subreddit.subreddit}
                 </div>
               );
             })
           ) : (
-            <p style={{ color: 'grey' }}>no communities</p>
+            <p style={{ color: 'grey' }}>no subreddits</p>
           )}
         </div>
         {props.environment !== 'Home' ? (
           <Button
             className="mt-2"
             as={Link}
-            to="/communities"
+            to="/subreddits"
             block
             variant="outline-secondary"
           >
@@ -78,7 +78,7 @@ const CommunitiesRandom = (props) => {
         ) : (
           <Button
             as={Link}
-            to="/communities"
+            to="/subreddits"
             block
             variant="outline-secondary"
             className="mt-2"
@@ -90,4 +90,4 @@ const CommunitiesRandom = (props) => {
     </div>
   );
 };
-export default CommunitiesRandom;
+export default SubredditsRandom;

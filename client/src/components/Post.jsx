@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { authenticate } from '../../utils/RequestPrivate';
-import { environmentContext } from '../../contexts/Environment';
+import { authenticate } from '../utils/RequestPrivate';
+import { environmentContext } from '../contexts/Environment';
 import { useHistory } from 'react-router-dom';
 
 const Post = () => {
@@ -26,7 +26,7 @@ const Post = () => {
     const data = {
       title: title,
       text: text,
-      community: env,
+      subreddit: env,
     };
     try {
       const response = await authenticate('posts/', data);

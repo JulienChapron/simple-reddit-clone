@@ -42,8 +42,8 @@ const UserSchema = new Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
-UserSchema.virtual("communities", {
-  ref: "Community",
+UserSchema.virtual("subreddits", {
+  ref: "Subreddit",
   localField: "_id",
   foreignField: "userId",
   justOne: false,

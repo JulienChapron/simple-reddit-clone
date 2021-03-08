@@ -1,6 +1,6 @@
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
-const Community = require("../models/Community");
+const Subreddit = require("../models/Subreddit");
 const Post = require("../models/Post");
 const User = require("../models/User");
 
@@ -13,23 +13,26 @@ exports.getPostsUser = asyncHandler(async (req, res, next) => {
     return next(
       new ErrorResponse(`No user with username of ${req.params.username}`, 404)
     );
-  const posts = await Post.where("userId", user._id).sort("-createdAt");
+  const posts = await Post.where("userId", user._id)
+    .populate({ path: "userId", select: "avatarUrl username" })
+    .populate({ path: "subreddits", select: "photoUrl"})
+    .sort("-createdAt");
   if (!posts) {
     return next(
       new ErrorResponse(`No category with id of ${req.body.categoryId}`, 404)
     );
   }
-  console.log(posts, 'posts');
+  console.log(posts, "posts");
   res.status(200).json({ success: true, data: posts });
 });
 
 // @desc    Get videos
 // @route   GET /api/v1/videos/public or /api/v1/videos/private
 // @access  Public Or Private
-exports.getPostsCommunity = asyncHandler(async (req, res, next) => {
-  const posts = await Post.where("community", req.params.subreddit).sort(
-    "-createdAt"
-  );
+exports.getPostsSubreddit = asyncHandler(async (req, res, next) => {
+  const posts = await Post.where("subreddit", req.params.subreddit)
+    .populate({ path: "userId", select: "avatarUrl username" })
+    .sort("-createdAt");
   if (!posts) {
     return next(
       new ErrorResponse(`No category with id of ${req.body.categoryId}`, 404)
@@ -42,11 +45,10 @@ exports.getPostsCommunity = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/posts/
 // @access  Private
 exports.createPost = asyncHandler(async (req, res, next) => {
-  const community = await Community.where("title", req.body.title);
-
-  if (!community) {
+  const subreddit = await Subreddit.where("title", req.body.title);
+  if (!subreddit) {
     return next(
-      new ErrorResponse(`No community with title of ${req.body.title}`, 404)
+      new ErrorResponse(`No subreddit with title of ${req.body.title}`, 404)
     );
   }
   const post = await Post.create({

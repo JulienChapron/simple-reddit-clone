@@ -3,7 +3,7 @@ const path = require('path')
 const asyncHandler = require('../middleware/async')
 const ErrorResponse = require('../utils/errorResponse')
 const sendEmail = require('../utils/sendEmail')
-const Community = require('../models/Community')
+const Subreddit = require('../models/Subreddit')
 const User = require('../models/User')
 
 // @desc    Register user

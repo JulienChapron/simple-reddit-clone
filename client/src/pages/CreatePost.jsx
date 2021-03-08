@@ -7,14 +7,14 @@ import {
   Tab,
 } from 'react-bootstrap';
 import { environmentContext } from '../contexts/Environment';
-import Post from '../components/createpost/Post';
-import ImageVideo from '../components/createpost/ImageVideo';
-import Link from '../components/createpost/Link';
+import Post from '../components/Post';
+import ImageVideo from '../components/ImageVideo';
+import Link from '../components/Link';
 import { themeContext } from '../contexts/Theme';
 
 const CreatePost = () => {
   const [key, setKey] = useState('post');
-  const [community, setCommunity] = useState(null);
+  const [subreddit, setSubreddit] = useState(null);
   const { environment } = useContext(environmentContext);
   const { theme } = useContext(themeContext);
 
@@ -25,7 +25,7 @@ const CreatePost = () => {
         className="mt-2"
         variant={theme === 'dark' ? 'outline-secondary' : 'light'}
         id="dropdown-basic-button"
-        title={environment ? environment : 'Choose a community'}
+        title={environment ? environment : 'Choose a subreddit'}
       >
         <Dropdown.Header>Profile</Dropdown.Header>
         <Dropdown.Item>{environment}</Dropdown.Item>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { authenticate } from '../../utils/RequestPrivate';
+import { authenticate } from '../utils/RequestPrivate';
 import { useHistory } from 'react-router-dom';
 
-const CommunityForm = (props) => {
+const SubredditForm = (props) => {
   let history = useHistory();
   const [title, setTitle] = useState('');
   const [subreddit, setSubreddit] = useState('');
@@ -26,7 +26,7 @@ const CommunityForm = (props) => {
       category: props.category.toLowerCase(),
     };
     try {
-      const response = await authenticate('communities/', data);
+      const response = await authenticate('subreddits/', data);
       if (response.data) {
         history.push('/subreddit/'+response.data.subreddit);
         setAuthToken(response);
@@ -70,9 +70,9 @@ const CommunityForm = (props) => {
         variant="primary"
         onClick={handleSubmit}
       >
-        Add Community
+        Add Subreddit
       </Button>
     </div>
   );
 };
-export default CommunityForm;
+export default SubredditForm;

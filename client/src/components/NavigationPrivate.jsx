@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { authContext } from '../../contexts/Auth';
-import { environmentContext } from '../../contexts/Environment';
-import { themeContext } from '../../contexts/Theme';
-import { authenticate } from '../../utils/RequestPrivate';
+import { authContext } from '../contexts/Auth';
+import { environmentContext } from '../contexts/Environment';
+import { themeContext } from '../contexts/Theme';
+import { authenticate } from '../utils/RequestPrivate';
 import {
   NavDropdown,
   Nav,
@@ -55,7 +55,7 @@ const NavigationPrivate = () => {
             </NavDropdown.Item>
             <NavDropdown.Item>Popular</NavDropdown.Item>
             <NavDropdown.Item>All</NavDropdown.Item>
-            <NavDropdown.Item>Top communities</NavDropdown.Item>
+            <NavDropdown.Item>Top subreddits</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Form inline>
@@ -66,9 +66,9 @@ const NavigationPrivate = () => {
           />
         </Form>
         <Nav className="ml-auto">
-          <Link to="/create-community">
+          <Link to="/create-subreddit">
             <Button className="m-1" variant="outline-secondary">
-              Create Community
+              Create Subreddit
             </Button>
           </Link>
           <Link to="/create-post">

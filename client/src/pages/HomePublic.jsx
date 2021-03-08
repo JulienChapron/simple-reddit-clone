@@ -10,8 +10,8 @@ const HomePublic = () => {
           <div className="card-reddit">List post (inifinite loop)</div>
         </Col>
         <Col lg={4} md={6} sm={12}>
-          <div className="card-reddit">Top communities by theme/finance/hack/tech (random)</div>
-          <div className="card-reddit">Tending communities / all by nb members</div>
+          <div className="card-reddit">Top subreddits by theme/finance/hack/tech (random)</div>
+          <div className="card-reddit">Tending subreddits / all by nb members</div>
         </Col>
       </Row>
     </Container>

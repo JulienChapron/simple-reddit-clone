@@ -3,19 +3,19 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const Schema = mongoose.Schema;
 
-const CommunitySchema = new Schema(
+const SubredditSchema = new Schema(
   {
     subreddit: {
-      type: String,
-      minlength: [3, "Subreddit must be three characters long"],
-      required: [true, "Subreddit is required"],
-    },
-    title: {
       type: String,
       minlength: [3, "Title must be three characters long"],
       trim: true,
       unique: true,
       uniqueCaseInsensitive: true,
+      required: [true, "Subreddit is required"],
+    },
+    title: {
+      type: String,
+      minlength: [3, "Title must be three characters long"],
       required: [true, "Title is required"],
     },
     description: {
@@ -37,9 +37,9 @@ const CommunitySchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
-CommunitySchema.plugin(uniqueValidator, { message: "{PATH} already exists." });
+SubredditSchema.plugin(uniqueValidator, { message: "{PATH} already exists." });
 
-module.exports = mongoose.model("Community", CommunitySchema);
+module.exports = mongoose.model("Subreddit", SubredditSchema);

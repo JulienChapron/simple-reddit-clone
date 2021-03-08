@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import PostsList from '../components/user/PostsList';
-import UserCard from '../components/user/UserCard';
+import PostsList from '../components/PostsList';
+import UserCard from '../components/UserCard';
 import { environmentContext } from '../contexts/Environment';
 
 const User = () => {
@@ -19,7 +19,7 @@ const User = () => {
       <div>
         <Row>
           <Col lg={8} md={12} sm={12}>
-            <div className="card-reddit">
+            <div>
               <PostsList environment={environment} />
             </div>
           </Col>

@@ -1,48 +1,48 @@
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
-const Community = require("../models/Community");
+const Subreddit = require("../models/Subreddit");
 const path = require('path')
 
 // @desc    Get categories
 // @route   GET /api/v1/categories
 // @access  Private/Admin
-exports.getCommunities = asyncHandler(async (req, res, next) => {
+exports.getSubreddits = asyncHandler(async (req, res, next) => {
   res.status(200).json(res.advancedResults);
 });
 
 // @desc    Get categories
 // @route   GET /api/v1/categories
 // @access  Private/Admin
-exports.getCommunitiesByCategory = asyncHandler(async (req, res, next) => {
-  const community = await Community.where("category", req.params.category);
-  if (!community) {
+exports.getSubredditsByCategory = asyncHandler(async (req, res, next) => {
+  const subreddit = await Subreddit.where("category", req.params.category);
+  if (!subreddit) {
     return next(
       new ErrorResponse(
-        `No community with that category of ${req.params.category}`
+        `No subreddit with that category of ${req.params.category}`
       )
     );
   }
-  res.status(200).json({ success: true, data: community });
+  res.status(200).json({ success: true, data: subreddit });
 });
 
 // @desc    Get single category
 // @route   GET /api/v1/categories/:id
 // @access  Private/Admin
-exports.getCommunity = asyncHandler(async (req, res, next) => {
-  const community = await Community.where("subreddit", req.params.subreddit);
-  if (!community) {
+exports.getSubreddit = asyncHandler(async (req, res, next) => {
+  const subreddit = await Subreddit.where("subreddit", req.params.subreddit);
+  if (!subreddit) {
     return next(
-      new ErrorResponse(`No community with that subreddit of ${req.params.subreddit}`)
+      new ErrorResponse(`No subreddit with that subreddit of ${req.params.subreddit}`)
     );
   }
 
-  res.status(200).json({ success: true, data: community });
+  res.status(200).json({ success: true, data: subreddit });
 });
 
 // @desc    Create Category
 // @route   POST /api/v1/categories/
 // @access  Private/Admin
-exports.createCommunity = asyncHandler(async (req, res, next) => {
+exports.createSubreddit = asyncHandler(async (req, res, next) => {
   if (/\s/g.test(req.body.subreddit)) {
     return next(
       new ErrorResponse(
@@ -53,55 +53,55 @@ exports.createCommunity = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const community = await Community.create({
+  const subreddit = await Subreddit.create({
     ...req.body,
     userId: req.user.id,
   });
-  return res.status(200).json({ success: true, data: community });
+  return res.status(200).json({ success: true, data: subreddit });
 });
 
 // @desc    Update category
 // @route   PUT /api/v1/categories
 // @access  Private/Admin
-exports.updateCommunity = asyncHandler(async (req, res, next) => {
-  const community = await Community.findByIdAndUpdate(req.params.id, req.body, {
+exports.updateSubreddit = asyncHandler(async (req, res, next) => {
+  const subreddit = await Subreddit.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
     context: "query",
   });
 
-  if (!community)
+  if (!subreddit)
     return next(
-      new ErrorResponse(`No community with that id of ${req.params.id}`)
+      new ErrorResponse(`No subreddit with that id of ${req.params.id}`)
     );
 
-  res.status(200).json({ success: true, data: community });
+  res.status(200).json({ success: true, data: subreddit });
 });
 
 // @desc    Delete Category
 // @route   DELETE /api/v1/categories/:id
 // @access  Private/Admin
-exports.deleteCommunity = asyncHandler(async (req, res, next) => {
-  let community = await Community.findById(req.params.id);
+exports.deleteSubreddit = asyncHandler(async (req, res, next) => {
+  let subreddit = await Subreddit.findById(req.params.id);
 
-  if (!community) {
+  if (!subreddit) {
     return next(
-      new ErrorResponse(`No community with id of ${req.params.id}`, 404)
+      new ErrorResponse(`No subreddit with id of ${req.params.id}`, 404)
     );
   }
 
-  await community.remove();
+  await subreddit.remove();
 
-  return res.status(200).json({ success: true, community });
+  return res.status(200).json({ success: true, subreddit });
 });
 
 // @desc    Thumbnails user
 // @route   PUT /api/v1/auth/users/:username
 // @access  Private/Admin
 exports.uploadImage = asyncHandler(async (req, res, next) => {
-  const community = await Community.findOne({ subreddit: req.params.subreddit });
-  if (!community)
-    return next(new ErrorResponse(`No community with subreddit of ${req.params.subreddit}`, 404))
+  const subreddit = await Subreddit.findOne({ subreddit: req.params.subreddit });
+  if (!subreddit)
+    return next(new ErrorResponse(`No subreddit with subreddit of ${req.params.subreddit}`, 404))
 
   if (!req.files) {
     return next(new ErrorResponse(`Please upload a file`, 404))
@@ -123,16 +123,16 @@ exports.uploadImage = asyncHandler(async (req, res, next) => {
     )
   }
 
-  file.name = `photo-${community._id}${path.parse(file.name).ext}`
+  file.name = `photo-${subreddit._id}${path.parse(file.name).ext}`
 
   file.mv(
-    `${process.env.FILE_UPLOAD_PATH}/communities/photo/${file.name}`,
+    `${process.env.FILE_UPLOAD_PATH}/subreddits/photo/${file.name}`,
     async (err) => {
       if (err) {
         console.error(err)
         return next(new ErrorResponse(`Problem with file upload`, 500))
       }
-      await Community.findByIdAndUpdate(community._id, { photoUrl: file.name })
+      await Subreddit.findByIdAndUpdate(subreddit._id, { photoUrl: file.name })
       res.status(200).json({ success: true, data: file.name })
     }
   )

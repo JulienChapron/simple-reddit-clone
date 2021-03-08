@@ -2,30 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { getPublic } from '../utils/RequestPublic';
 import { Link } from 'react-router-dom';
-import CommunitiesRandom from '../components/CommunitiesRandom';
+import SubredditsRandom from '../components/SubredditsRandom';
 import categories from '../assets/categories/Categories';
 
-const Communities = () => {
+const Subreddits = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
-  const [communities, setCommunities] = useState([]);
-  const getCommunitiesByCategory = async (category) => {
+  const [subreddits, setSubreddits] = useState([]);
+  const getSubredditsByCategory = async (category) => {
     try {
-      const response = await getPublic('communities/category/' + category);
-      setCommunities(response.data);
+      const response = await getPublic('subreddits/category/' + category);
+      setSubreddits(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-  const getCommunities = async () => {
+  const getSubreddits = async () => {
     try {
-      const response = await getPublic('communities/');
-      setCommunities(response.data);
+      const response = await getPublic('subreddits/');
+      setSubreddits(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getCommunities();
+    getSubreddits();
   }, []);
   return (
     <Container>
@@ -45,9 +45,9 @@ const Communities = () => {
                   }
                   onClick={() =>
                     category !== 'All Categories'
-                      ? getCommunitiesByCategory(category.toLowerCase()) &&
+                      ? getSubredditsByCategory(category.toLowerCase()) &&
                         setSelectedCategory(category)
-                      : getCommunities() && setSelectedCategory(category)
+                      : getSubreddits() && setSelectedCategory(category)
                   }
                 >
                   {category}
@@ -58,18 +58,18 @@ const Communities = () => {
         </Col>
         <Col lg={6} md={12} sm={12}>
           <div className="card-reddit">
-            <h5>Today's Top Growing Communities</h5>
+            <h5>Today's Top Growing Subreddits</h5>
             <hr />
-            {Object.values(communities).map((community, index) => {
+            {Object.values(subreddits).map((subreddit, index) => {
               return (
-                <Link to={`/subreddit/${community.subreddit}`}>
+                <Link to={`/subreddit/${subreddit.subreddit}`}>
                   <div key={index} className="pointer categories">
                     <img
-                      className="community-thumbnail"
-                      src={`http://localhost:4000/uploads/communities/photo/${community.photoUrl}`}
+                      className="subreddit-thumbnail"
+                      src={`http://localhost:4000/uploads/subreddits/photo/${subreddit.photoUrl}`}
                       alt="img-default"
                     />{' '}
-                    subreddit/{community.subreddit}
+                    subreddit/{subreddit.subreddit}
                   </div>
                 </Link>
               );
@@ -77,11 +77,11 @@ const Communities = () => {
           </div>
         </Col>
         <Col lg={4} md={12} sm={12}>
-          <CommunitiesRandom />
-          <CommunitiesRandom />
+          <SubredditsRandom />
+          <SubredditsRandom />
         </Col>
       </Row>
     </Container>
   );
 };
-export default Communities;
+export default Subreddits;

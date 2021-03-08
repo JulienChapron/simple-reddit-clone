@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getPublic } from '../../utils/RequestPublic';
-import SkeletonListPosts from '../SkeletonListPosts';
+import { getPublic } from '../utils/RequestPublic';
+import SkeletonListPosts from './SkeletonListPosts';
 import Moment from 'react-moment';
 import { Button } from 'react-bootstrap';
 
@@ -49,18 +49,22 @@ const PostsList = (props) => {
                       fontWeight: 'bold',
                     }}
                   >
-                    <span style={{ marginLeft: '10px' }}>
-                      <img
-                        style={{
-                          width: '18px',
-                          height: '18px',
-                          borderRadius: '100%',
-                        }}
-                        src={`http://localhost:4000/uploads/communities/photo/${post.userId.avatarUrl}`}
-                        alt="user-avatar"
-                      />
-                      {props.environment}
-                    </span>
+                    {props.environment.split('/')[0] === 'user' &&
+                    post.subreddit !== null ? (
+                      <span style={{ marginLeft: '10px' }}>
+                        {post.subreddits.photoUrl}
+                        <img
+                          style={{
+                            width: '20px',
+                            height: '20px',
+                            borderRadius: '100%',
+                          }}
+                          src={`http://localhost:4000/uploads/subreddits/photo/${post.subreddits[0].photoUrl}`}
+                          alt="user-avatar"
+                        />
+                        subreddit/{post.subreddit}
+                      </span>
+                    ) : null}
                     <span style={{ marginLeft: '10px' }}>
                       Posted by user/{post.userId.username}
                     </span>
@@ -73,7 +77,7 @@ const PostsList = (props) => {
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
                 </div>
-                <Button className="mt-3" variant="outline-secondary" size="sm">
+                <Button className="mt-1" variant="outline-secondary" size="sm">
                   {'0'} Comments
                 </Button>
               </div>

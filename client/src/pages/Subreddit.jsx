@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
-import CommunityCard from '../components/community/CommunityCard';
+import SubredditCard from '../components/SubredditCard';
 import { environmentContext } from '../contexts/Environment';
-import PostsList from '../components/user/PostsList';
+import PostsList from '../components/PostsList';
 
-const Community = () => {
+const Subreddit = () => {
   const { environment, setEnvironmentContext } = useContext(environmentContext);
   const env = () => {
     const params = window.location.href.split('/');
@@ -23,10 +23,10 @@ const Community = () => {
           </div>
         </Col>
         <Col lg={4} md={12} sm={12}>
-          <CommunityCard />
+          <SubredditCard />
         </Col>
       </Row>
     </Container>
   );
 };
-export default Community;
+export default Subreddit;

@@ -1,32 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
-import EditPost from '../components/homePrivate/EditPost';
-import CommunitiesRandom from '../components/CommunitiesRandom';
+import EditPost from '../components/EditPost';
+import SubredditsRandom from '../components/SubredditsRandom';
 import categories from '../assets/categories/Categories';
 import { getPublic } from '../utils/RequestPublic';
 import { environmentContext } from '../contexts/Environment';
 
 const HomePrivate = () => {
   const { environment, setEnvironmentContext } = useContext(environmentContext);
-  const [communitiesRandom, setCommunitiesRandom] = useState([]);
+  const [subredditsRandom, setSubredditsRandom] = useState([]);
   const [categoryRandom, setCategoryRandom] = useState(null);
   const getEnv = () => {
     setEnvironmentContext('Home');
   };
-  const getCommunitiesRandom = async () => {
+  const getSubredditsRandom = async () => {
     try {
       const random = categories[Math.floor(Math.random() * categories.length)];
       setCategoryRandom(random);
       const response = await getPublic(
-        'communities/category/' + random.toLowerCase()
+        'subreddits/category/' + random.toLowerCase()
       );
-      setCommunitiesRandom(response.data);
+      setSubredditsRandom(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getCommunitiesRandom();
+    getSubredditsRandom();
     getEnv();
   }, []);
 
@@ -41,13 +41,13 @@ const HomePrivate = () => {
           <div className="card-reddit">List post (inifinite loop)</div>
         </Col>
         <Col lg={4} md={6} sm={12}>
-          <CommunitiesRandom
+          <SubredditsRandom
             environment={environment}
             categoryRandom={categoryRandom}
-            communitiesRandom={communitiesRandom}
+            subredditsRandom={subredditsRandom}
           />
           <div className="card-reddit">
-            Tending communities / all by nb members
+            Tending subreddits / all by nb members
           </div>
         </Col>
       </Row>

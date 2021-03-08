@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Container, DropdownButton, Dropdown } from 'react-bootstrap';
-import CommunityForm from '../components/CreateCommunity/CommunityForm';
+import SubredditForm from '../components/SubredditForm';
 import categories from '../assets/categories/Categories';
 
-const CreateCommunity = () => {
+const CreateSubreddit = () => {
   const [category, setCategory] = useState(null);
   return (
     <Container>
-      <h4 className="mt-2">Create a community</h4>
+      <h4 className="mt-2">Create a subreddit</h4>
       <DropdownButton
         className="mt-2"
         variant="light"
@@ -23,9 +23,9 @@ const CreateCommunity = () => {
         })}
       </DropdownButton>
       <div className="card-reddit">
-        <CommunityForm category={category}/>
+        <SubredditForm category={category}/>
       </div>
     </Container>
   );
 };
-export default CreateCommunity;
+export default CreateSubreddit;

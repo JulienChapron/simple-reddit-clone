@@ -21,7 +21,7 @@ dotenv.config({ path: './config/.env' })
 DBConnection()
 const authRoutes = require('./routes/auth')
 const postsRoutes = require('./routes/posts')
-const communitiesRoutes = require('./routes/communities')
+const subredditsRoutes = require('./routes/subreddits')
 const usersRoutes = require('./routes/users')
 const commentsRoutes = require('./routes/comments')
 
@@ -52,7 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 const versionOne = (routeName) => `/api/v1/${routeName}`
 app.use(versionOne('auth'), authRoutes)
 app.use(versionOne('posts'), postsRoutes)
-app.use(versionOne('communities'), communitiesRoutes)
+app.use(versionOne('subreddits'), subredditsRoutes)
 app.use(versionOne('users'), usersRoutes)
 app.use(versionOne('comments'), commentsRoutes)
 
