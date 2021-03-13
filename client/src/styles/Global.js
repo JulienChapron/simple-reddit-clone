@@ -16,7 +16,11 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.text};
     text-decoration: none;
   }
+  p{
+    margin-bottom:5px;
+  }
   h5{
+    margin-bottom:5px;
     font-size:16px;
     font-weight:bold;
   }

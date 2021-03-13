@@ -3,6 +3,7 @@ import { Container, Col, Row, Button } from 'react-bootstrap';
 import SubredditCard from '../components/SubredditCard';
 import { environmentContext } from '../contexts/Environment';
 import PostsList from '../components/PostsList';
+import EditPost from '../components/EditPost';
 
 const Subreddit = () => {
   const { environment, setEnvironmentContext } = useContext(environmentContext);
@@ -19,8 +20,9 @@ const Subreddit = () => {
       <Row>
         <Col lg={8} md={12} sm={12}>
           <div className="card-reddit">
-            <PostsList environment={environment} />
+            <EditPost />
           </div>
+          <PostsList environment={environment} />
         </Col>
         <Col lg={4} md={12} sm={12}>
           <SubredditCard />

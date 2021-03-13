@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { authenticate } from '../utils/RequestPrivate';
 import { environmentContext } from '../contexts/Environment';
 import { useHistory } from 'react-router-dom';
 
@@ -50,7 +49,7 @@ const Post = () => {
           onChange={titleChange}
         />
       </Form.Group>
-      <Form.Group controlId="formBasicPassword">
+      <Form.Group controlId="formBasicFile">
         <Form.Control
           className="theme-input"
           as="textarea"

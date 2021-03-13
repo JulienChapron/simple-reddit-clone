@@ -9,9 +9,16 @@ const PostsList = (props) => {
   const [loading, setLoading] = useState(true);
   const getPosts = async () => {
     try {
-      const response = await getPublic('posts/' + props.environment);
-      console.log(props.environment, response.data);
-      setPosts(response.data);
+      if (props.environment === 'Home') {
+        console.log(props.environment);
+        const response = await getPublic('posts/new');
+        console.log('subreddit', response.data);
+        setPosts(response.data);
+      } else {
+        const response = await getPublic('posts/' + props.environment);
+        console.log('user', response.data);
+        setPosts(response.data);
+      }
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -28,20 +35,10 @@ const PostsList = (props) => {
             return (
               <div
                 key={index}
-                style={{ padding: '5px' }}
+                style={{ padding: '10px' }}
                 className="card-reddit"
               >
                 <div style={{ display: 'flex', lineHeight: '30px' }}>
-                  <img
-                    style={{
-                      verticalAlign: 'middle',
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '100%',
-                    }}
-                    src={`http://localhost:4000/uploads/users/avatar/${post.userId.avatarUrl}`}
-                    alt="user-avatar"
-                  />
                   <p
                     style={{
                       fontSize: '12px',
@@ -50,13 +47,15 @@ const PostsList = (props) => {
                     }}
                   >
                     {props.environment.split('/')[0] === 'user' &&
-                    post.subreddit !== null ? (
-                      <span style={{ marginLeft: '10px' }}>
+                    post.subreddit !== null &&
+                    post.subreddits !== undefined ? (
+                      <span style={{ marginRight: '10px' }}>
                         {post.subreddits.photoUrl}
                         <img
                           style={{
-                            width: '20px',
-                            height: '20px',
+                            verticalAlign: 'middle',
+                            width: '30px',
+                            height: '30px',
                             borderRadius: '100%',
                           }}
                           src={`http://localhost:4000/uploads/subreddits/photo/${post.subreddits[0].photoUrl}`}
@@ -65,10 +64,10 @@ const PostsList = (props) => {
                         subreddit/{post.subreddit}
                       </span>
                     ) : null}
-                    <span style={{ marginLeft: '10px' }}>
+                    <span style={{ marginRight: '10px' }}>
                       Posted by user/{post.userId.username}
                     </span>
-                    <span style={{ marginLeft: '10px' }}>
+                    <span>
                       <Moment fromNow>{post.createdAt}</Moment>
                     </span>
                   </p>
@@ -76,9 +75,31 @@ const PostsList = (props) => {
                 <div>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
+                  {post.linkUrl ? <p>{post.linkUrl}</p> : undefined}
+                  {post.imageUrl ? (
+                    <img
+                      style={{ padding: '20px', width: '100%', height: 'auto' }}
+                      src={`http://localhost:4000/uploads/posts/images/${post.imageUrl}`}
+                      alt="photo-posts"
+                    />
+                  ) : undefined}
+                  {post.videoUrl ? (
+                    <video
+                      controls
+                      autostart
+                      autoPlay
+                      type="video/mp4"
+                      style={{ padding: '20px', width: '100%', height: 'auto' }}
+                      src={`http://localhost:4000/uploads/posts/videos/${post.videoUrl}`}
+                      alt="photo-posts"
+                    />
+                  ) : undefined}
                 </div>
                 <Button className="mt-1" variant="outline-secondary" size="sm">
                   {'0'} Comments
+                </Button>
+                <Button className="mt-1 ml-2" variant="outline-secondary" size="sm">
+                  Delete
                 </Button>
               </div>
             );

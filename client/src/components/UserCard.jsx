@@ -5,12 +5,16 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import penIcon from '../assets/icons/pen.png';
 import Moment from 'react-moment';
+import { authContext } from './../contexts/Auth';
 
 const UserCard = (props) => {
   const [user, setUser] = useState(null);
   const [url, setUrl] = useState(null);
   const [admin, setAdmin] = useState(false);
+  const { auth } = useContext(authContext);
+
   const getUser = async () => {
+    console.log(props.environment, 'props.environment')
     let usernameSplit = props.environment.split('/');
     let username = usernameSplit[usernameSplit.length - 1];
     try {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import EditPost from '../components/EditPost';
+import PostsList from '../components/PostsList';
+import FiltersPosts from '../components/FiltersPosts';
 import SubredditsRandom from '../components/SubredditsRandom';
 import categories from '../assets/categories/Categories';
 import { getPublic } from '../utils/RequestPublic';
@@ -10,7 +12,7 @@ const HomePrivate = () => {
   const { environment, setEnvironmentContext } = useContext(environmentContext);
   const [subredditsRandom, setSubredditsRandom] = useState([]);
   const [categoryRandom, setCategoryRandom] = useState(null);
-  const getEnv = () => {
+  const setEnv = () => {
     setEnvironmentContext('Home');
   };
   const getSubredditsRandom = async () => {
@@ -27,7 +29,7 @@ const HomePrivate = () => {
   };
   useEffect(() => {
     getSubredditsRandom();
-    getEnv();
+    setEnv();
   }, []);
 
   return (
@@ -37,8 +39,12 @@ const HomePrivate = () => {
           <div className="card-reddit">
             <EditPost />
           </div>
-          <div className="card-reddit">Top new / by day, month, year, all</div>
-          <div className="card-reddit">List post (inifinite loop)</div>
+          <div className="card-reddit">
+            <FiltersPosts />
+          </div>
+          <div className="card-reddit">
+            <PostsList environment={environment} />
+          </div>
         </Col>
         <Col lg={4} md={6} sm={12}>
           <SubredditsRandom
@@ -46,9 +52,11 @@ const HomePrivate = () => {
             categoryRandom={categoryRandom}
             subredditsRandom={subredditsRandom}
           />
-          <div className="card-reddit">
-            Tending subreddits / all by nb members
-          </div>
+          <SubredditsRandom
+            environment={environment}
+            categoryRandom={categoryRandom}
+            subredditsRandom={subredditsRandom}
+          />
         </Col>
       </Row>
     </Container>
