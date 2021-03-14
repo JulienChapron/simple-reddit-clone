@@ -4,7 +4,6 @@ import PostsList from '../components/PostsList';
 import UserCard from '../components/UserCard';
 import { environmentContext } from '../contexts/Environment';
 import EditPost from '../components/EditPost';
-
 const User = () => {
   const { environment, setEnvironmentContext } = useContext(environmentContext);
   const getEnv = () => {

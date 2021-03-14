@@ -12,15 +12,10 @@ const ImageVideo = () => {
   const [file, setFile] = useState(null);
   const { auth } = useContext(authContext);
 
-  const titleChange = (e) => {
-    setTitle(e.target.value);
-  };
   const onChangeTitle = (e) => {
-    console.log(e.target.value)
     setTitle(e.target.value)
   }
   const onChangeFile = (e) => {
-    console.log(e.target.files[0])
     setFile(e.target.files[0])
   }
   const handleSubmit = async (e) => {

@@ -10,6 +10,7 @@ import HomePrivate from '../pages/HomePrivate';
 import CreatePost from '../pages/CreatePost';
 import CreateSubreddit from '../pages/CreateSubreddit';
 import Subreddits from '../pages/Subreddits';
+import PostView from '../components/PostView';
 import Subreddit from '../pages/Subreddit';
 import User from '../pages/User';
 import RedirectAuth from './RedirectAuth';
@@ -23,6 +24,9 @@ const RoutesPublic = () => (
       </Route>
       <Route exact path="/create-post">
         <CreatePost />
+      </Route>
+      <Route exact path="/:type/:name/comments/:id/:title">
+        <PostView />
       </Route>
       <Route exact path="/create-subreddit">
         <CreateSubreddit />

@@ -3,20 +3,31 @@ import { getPublic } from '../utils/RequestPublic';
 import SkeletonListPosts from './SkeletonListPosts';
 import Moment from 'react-moment';
 import { Button } from 'react-bootstrap';
+import { methods } from '../utils/RequestPrivate';
+import { useHistory } from 'react-router-dom';
 
 const PostsList = (props) => {
+  let history = useHistory();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const showPost = (id, title) => {
+    history.push('/' + props.environment + '/comments/' + id + '/' + title);
+  };
+  const deletePost = async (id) => {
+    try {
+      const response = await methods('posts/' + id, 'DELETE');
+      setPosts(posts.filter((x) => x._id !== response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getPosts = async () => {
     try {
       if (props.environment === 'Home') {
-        console.log(props.environment);
         const response = await getPublic('posts/new');
-        console.log('subreddit', response.data);
         setPosts(response.data);
       } else {
         const response = await getPublic('posts/' + props.environment);
-        console.log('user', response.data);
         setPosts(response.data);
       }
       setLoading(false);
@@ -34,6 +45,7 @@ const PostsList = (props) => {
           posts.map((post, index) => {
             return (
               <div
+                onClick={() => showPost(post._id, post.title)}
                 key={index}
                 style={{ padding: '10px' }}
                 className="card-reddit"
@@ -50,17 +62,18 @@ const PostsList = (props) => {
                     post.subreddit !== null &&
                     post.subreddits !== undefined ? (
                       <span style={{ marginRight: '10px' }}>
-                        {post.subreddits.photoUrl}
-                        <img
-                          style={{
-                            verticalAlign: 'middle',
-                            width: '30px',
-                            height: '30px',
-                            borderRadius: '100%',
-                          }}
-                          src={`http://localhost:4000/uploads/subreddits/photo/${post.subreddits[0].photoUrl}`}
-                          alt="user-avatar"
-                        />
+                        {post.subreddits.photoUrl ? (
+                          <img
+                            style={{
+                              verticalAlign: 'middle',
+                              width: '30px',
+                              height: '30px',
+                              borderRadius: '100%',
+                            }}
+                            src={`http://localhost:4000/uploads/subreddits/photo/${post.subreddits[0].photoUrl}`}
+                            alt="user-avatar"
+                          />
+                        ) : undefined}
                         subreddit/{post.subreddit}
                       </span>
                     ) : null}
@@ -75,7 +88,9 @@ const PostsList = (props) => {
                 <div>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
-                  {post.linkUrl ? <p>{post.linkUrl}</p> : undefined}
+                  {post.linkUrl ? (
+                    <p href={post.linkUrl}>{post.linkUrl}</p>
+                  ) : undefined}
                   {post.imageUrl ? (
                     <img
                       style={{ padding: '20px', width: '100%', height: 'auto' }}
@@ -95,10 +110,15 @@ const PostsList = (props) => {
                     />
                   ) : undefined}
                 </div>
-                <Button className="mt-1" variant="outline-secondary" size="sm">
+                <Button className="mt-3" variant="outline-secondary" size="sm">
                   {'0'} Comments
                 </Button>
-                <Button className="mt-1 ml-2" variant="outline-secondary" size="sm">
+                <Button
+                  onClick={() => deletePost(post._id)}
+                  className="mt-3 ml-2"
+                  variant="outline-secondary"
+                  size="sm"
+                >
                   Delete
                 </Button>
               </div>

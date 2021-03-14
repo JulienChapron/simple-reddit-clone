@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { environmentContext } from '../contexts/Environment';
 import { useHistory } from 'react-router-dom';
+import { authenticate } from '../utils/RequestPrivate';
 
 const Post = () => {
   let history = useHistory();
