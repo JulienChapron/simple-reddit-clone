@@ -14,7 +14,6 @@ import { themeContext } from '../contexts/Theme';
 
 const CreatePost = () => {
   const [key, setKey] = useState('post');
-  const [subreddit, setSubreddit] = useState(null);
   const { environment } = useContext(environmentContext);
   const { theme } = useContext(themeContext);
 
@@ -25,9 +24,11 @@ const CreatePost = () => {
         className="mt-2"
         variant={theme === 'dark' ? 'outline-secondary' : 'light'}
         id="dropdown-basic-button"
-        title={environment ? environment : 'Choose a subreddit'}
+        title={environment!=='Home' ? environment : 'Choose a subreddit'}
       >
-        <Dropdown.Header>Profile</Dropdown.Header>
+      <Dropdown.Header>Profile</Dropdown.Header>
+        <Dropdown.Item>{environment}</Dropdown.Item>
+        <Dropdown.Header>Subreddits</Dropdown.Header>
         <Dropdown.Item>{environment}</Dropdown.Item>
       </DropdownButton>
       <div className="card-reddit">

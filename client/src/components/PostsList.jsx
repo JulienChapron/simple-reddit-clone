@@ -5,13 +5,20 @@ import Moment from 'react-moment';
 import { Button } from 'react-bootstrap';
 import { methods } from '../utils/RequestPrivate';
 import { useHistory } from 'react-router-dom';
+import { authContext } from './../contexts/Auth';
 
 const PostsList = (props) => {
+  const { auth } = useContext(authContext);
   let history = useHistory();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const showPost = (id, title) => {
-    history.push('/' + props.environment + '/comments/' + id + '/' + title);
+  const showPost = (id, title, subreddit) => {
+    if (subreddit !== null)
+      history.push('/subreddit/' + subreddit + '/comments/' + id + '/' + title);
+    else
+      history.push(
+        '/user/' + auth.data.data.username + '/comments/' + id + '/' + title
+      );
   };
   const deletePost = async (id) => {
     try {
@@ -45,9 +52,9 @@ const PostsList = (props) => {
           posts.map((post, index) => {
             return (
               <div
-                onClick={() => showPost(post._id, post.title)}
+                onClick={() => showPost(post._id, post.title, post.subreddit)}
                 key={index}
-                style={{ padding: '10px' }}
+                style={{ padding: '10px', cursor: 'pointer' }}
                 className="card-reddit"
               >
                 <div style={{ display: 'flex', lineHeight: '30px' }}>
@@ -111,16 +118,18 @@ const PostsList = (props) => {
                   ) : undefined}
                 </div>
                 <Button className="mt-3" variant="outline-secondary" size="sm">
-                  {'0'} Comments
+                  {post.comments} Comments
                 </Button>
-                <Button
-                  onClick={() => deletePost(post._id)}
-                  className="mt-3 ml-2"
-                  variant="outline-secondary"
-                  size="sm"
-                >
-                  Delete
-                </Button>
+                {auth.data.data._id === post.userId ? (
+                  <Button
+                    onClick={() => deletePost(post._id)}
+                    className="mt-3 ml-2"
+                    variant="outline-secondary"
+                    size="sm"
+                  >
+                    Remove
+                  </Button>
+                ) : undefined}
               </div>
             );
           })
