@@ -31,7 +31,7 @@ const RoutesPublic = () => (
       <Route exact path="/create-subreddit">
         <CreateSubreddit />
       </Route>
-      <Route exact path="/subreddits">
+      <Route exact path="/subreddits/:category">
         <Subreddits />
       </Route>
       <Route exact path="/subreddit/:subreddit">

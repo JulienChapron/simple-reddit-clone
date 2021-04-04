@@ -8,12 +8,14 @@ import Moment from 'react-moment';
 import { authContext } from './../contexts/Auth';
 
 const PostView = () => {
-  const messagesEndRef = useRef(null)
+  const messagesEndRef = useRef(null);
   const { auth } = useContext(authContext);
   let { id } = useParams();
   let { type } = useParams();
   let { name } = useParams();
+  const [editPost, setEditPost] = useState(false);
   const [post, setPost] = useState(null);
+  const [textPost, setTextPost] = useState('');
   const [text, setText] = useState('');
   const [comments, setComments] = useState([]);
   const handleChangeText = (e) => {
@@ -29,7 +31,23 @@ const PostView = () => {
       const response = await methods('comments/', 'POST', data);
       setComments([...comments, { ...response.data }]);
       setText('');
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const textChange = (e) => {
+    setTextPost(e.target.value);
+  };
+  const updatePost = async () => {
+    try {
+      const data = {
+        text: textPost,
+      };
+      const response = await methods(`posts/${id}`, 'PUT', data);
+      setPost(response.data);
+      setEditPost(false)
+      set
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +56,7 @@ const PostView = () => {
     try {
       const response = await getPublic(`posts/${id}`);
       setPost(response.data);
+      setTextPost(response.data.text);
     } catch (error) {
       console.log(error);
     }
@@ -111,7 +130,7 @@ const PostView = () => {
                 </div>
                 <div>
                   <h4>{post.title}</h4>
-                  <p>{post.text}</p>
+                  {!editPost ? <p>{post.text}</p> : undefined}
                   {post.linkUrl ? (
                     <p href={post.linkUrl}>{post.linkUrl}</p>
                   ) : undefined}
@@ -134,6 +153,42 @@ const PostView = () => {
                     />
                   ) : undefined}
                 </div>
+                {editPost ? (
+                  <div>
+                    <Form.Control
+                      className="theme-input"
+                      as="textarea"
+                      rows={3}
+                      placeholder="Text"
+                      value={textPost}
+                      onChange={textChange}
+                    />
+                    <div class="text-right">
+                      <Button
+                        className="mt-3"
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => (setEditPost(false) & setTextPost(post.text))}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        className="ml-2 mt-3"
+                        size="sm"
+                        onClick={() => updatePost(post._id)}
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                ) : undefined}
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => setEditPost(true)}
+                >
+                  edit
+                </Button>
               </div>
             ) : undefined}
             <div className="card-reddit" style={{ marginBottom: '30px' }}>
@@ -208,7 +263,7 @@ const PostView = () => {
                     );
                   })
                 : undefined}
-                <div ref={messagesEndRef} />
+              <div ref={messagesEndRef} />
             </div>
           </Col>
           <Col lg={4} md={12} sm={12}>

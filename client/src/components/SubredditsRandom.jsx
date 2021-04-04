@@ -43,7 +43,7 @@ const SubredditsRandom = (props) => {
             marginLeft: '10px',
           }}
         >
-          {categoryRandom}
+          Top{' '}{categoryRandom}{' '}Communities
         </h5>
       </div>
       <div className="p-2">
@@ -69,7 +69,7 @@ const SubredditsRandom = (props) => {
           <Button
             className="mt-2"
             as={Link}
-            to="/subreddits"
+            to={`/subreddits/${categoryRandom}`}
             block
             variant="outline-secondary"
           >
@@ -78,7 +78,7 @@ const SubredditsRandom = (props) => {
         ) : (
           <Button
             as={Link}
-            to="/subreddits"
+            to={`/subreddits/${categoryRandom}`}
             block
             variant="outline-secondary"
             className="mt-2"

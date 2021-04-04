@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { getPublic } from '../utils/RequestPublic';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import SubredditsRandom from '../components/SubredditsRandom';
 import categories from '../assets/categories/Categories';
 
 const Subreddits = () => {
+  let history = useHistory();
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [subreddits, setSubreddits] = useState([]);
   const getSubredditsByCategory = async (category) => {
     try {
       const response = await getPublic('subreddits/category/' + category);
       setSubreddits(response.data);
+      setSelectedCategory(category)
+      history.push('/subreddits/' + category);
     } catch (error) {
       console.log(error);
     }
   };
   const getSubreddits = async () => {
+    const params = window.location.href.split('/');
+    const category = params[params.length - 1];
     try {
-      const response = await getPublic('subreddits/');
+      const response = await getPublic('subreddits/category/'+category);
       setSubreddits(response.data);
+      setSelectedCategory(category)
+      history.push('/subreddits/' + category);
     } catch (error) {
       console.log(error);
     }
@@ -43,11 +50,11 @@ const Subreddits = () => {
                       ? 'selected-category pointer'
                       : 'pointer category'
                   }
+                  to={`/subreddits/${category}`}
                   onClick={() =>
                     category !== 'All Categories'
-                      ? getSubredditsByCategory(category.toLowerCase()) &&
-                        setSelectedCategory(category)
-                      : getSubreddits() && setSelectedCategory(category)
+                      ? getSubredditsByCategory(category.toLowerCase())
+                      : getSubreddits()
                   }
                 >
                   {category}

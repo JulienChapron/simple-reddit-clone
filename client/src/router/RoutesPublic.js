@@ -25,7 +25,7 @@ const RoutesPublic = () => (
       <Route exact path="/signup">
         <Signup />
       </Route>
-      <Route exact path="/subreddits">
+      <Route exact path="/subreddits/:category">
         <NavigationPublic />
         <Subreddits />
       </Route>
