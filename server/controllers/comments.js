@@ -16,8 +16,6 @@ exports.getComments = asyncHandler(async (req, res, next) => {
 exports.getCommentByPostId = asyncHandler(async (req, res, next) => {
   const comments = await Comment.find({ postId: req.params.postId })
     .populate('userId')
-    .sort('-createdAt')
-
   if (!comments) {
     return next(
       new ErrorResponse(
@@ -45,7 +43,7 @@ exports.createComment = asyncHandler(async (req, res, next) => {
   }
   const comment = await Comment.create({
     ...req.body,
-    userId: req.user._id
+    userId: req.user
   })
 
   return res.status(200).json({ sucess: true, data: comment })
@@ -84,8 +82,7 @@ exports.updateComment = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/comments/:id
 // @access  Private
 exports.deleteComment = asyncHandler(async (req, res, next) => {
-  let comment = await Comment.findById(req.params.id).populate('videoId')
-
+  let comment = await Comment.findById(req.params.id).populate('postId')
   if (!comment) {
     return next(
       new ErrorResponse(`No comment with id of ${req.params.id}`, 404)
@@ -102,6 +99,6 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`You are not authorized to delete this comment`, 400)
     )
   }
-
-  return res.status(200).json({ success: true, comment })
+  console.log(comment, 'comment')
+  return res.status(200).json({ success: true, data: comment })
 })

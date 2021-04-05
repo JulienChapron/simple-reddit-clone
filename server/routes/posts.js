@@ -4,6 +4,8 @@ const {
   getPostsUser,
   getPost,
   createPost,
+  createPostMedias,
+  getPostsFilteredByNew,
   putPost,
   deletePost,
 } = require("../controllers/posts");
@@ -13,6 +15,8 @@ const advancedResults = require("../middleware/advancedResults");
 const { protect } = require("../middleware/auth");
 
 router.post("/", protect, createPost);
+router.post("/medias", protect, createPostMedias);
+router.get("/new", getPostsFilteredByNew);
 router.route("/user/:username").get(getPostsUser);
 router.route("/subreddit/:subreddit").get(getPostsSubreddit);
 router
