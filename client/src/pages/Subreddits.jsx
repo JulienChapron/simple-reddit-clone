@@ -9,34 +9,35 @@ import CategoryTop from '../components/CategoryTop';
 
 const Subreddits = () => {
   let history = useHistory();
+  const [loading, setLoading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [subreddits, setSubreddits] = useState([]);
   const getSubredditsByCategory = async (category) => {
+    setLoading(true)
     try {
       if (category !== 'All Categories') {
         const response = await getPublic(
           'subreddits/category/' + category.toLowerCase()
         );
         setSubreddits(response.data);
+        setLoading(false)
       } else {
         const response = await getPublic('subreddits');
         setSubreddits(response.data);
+        setLoading(false)
       }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    console.log('passage 1',location.pathname)
     if (location.pathname) {
-      console.log('passage')
       const params = window.location.href.split('/');
       const category = params[params.length - 1];
       setSelectedCategory(category);
       getSubredditsByCategory(category);
     }
     return history.listen((location) => {
-      console.log('passage', location.pathname);
       const params = location.pathname.split('/');
       const category = params[params.length - 1];
       setSelectedCategory(category);
@@ -51,6 +52,7 @@ const Subreddits = () => {
         </Col>
         <Col lg={6} md={12} sm={12}>
           <CategoryTop
+            loading={loading}
             subreddits={subreddits}
             selectedCategory={selectedCategory}
           />

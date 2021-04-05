@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import SkeletonListSubreddit from '../../src/components/SkeletonListSubreddits';
 const CategoryTop = (props) => {
   return (
     <div className="card-reddit">
       <h5>Today's Top Growing Subreddits in {props.selectedCategory}</h5>
       <hr />
-      {Object.values(props.subreddits).map((subreddit) => {
-        return (
-          <div key={subreddit.photoUrl}>
-            {subreddit.subreddit ? (
+     {props.loading ? <SkeletonListSubreddit /> : undefined}
+      {props.subreddits.length ? (
+        Object.values(props.subreddits).map((subreddit) => {
+          return (
+            <div key={subreddit.photoUrl}>
               <Link to={`/subreddit/${subreddit.subreddit}`}>
                 <div className="pointer categories">
                   <img
@@ -20,12 +21,12 @@ const CategoryTop = (props) => {
                   subreddit/{subreddit.subreddit}
                 </div>
               </Link>
-            ) : (
-              <p>No subreddit in {props.selectedCategory}</p>
-            )}
-          </div>
-        );
-      })}
+            </div>
+          );
+        })
+      ) : (
+        <p>No subreddits in {props.selectedCategory}</p>
+      )}
     </div>
   );
 };

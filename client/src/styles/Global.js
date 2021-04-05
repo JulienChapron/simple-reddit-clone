@@ -129,8 +129,8 @@ body {
   border:solid 1px #E8E8E8;
   margin-bottom:5px;
   border-radius: 4px;
-  height: 30px;
-  width:30px;
+  height: 50px;
+  width:50px;
   border-radius:100%;
   position: relative;
   overflow: hidden;
