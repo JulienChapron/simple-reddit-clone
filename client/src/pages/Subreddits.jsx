@@ -4,6 +4,8 @@ import { getPublic } from '../utils/RequestPublic';
 import { Link, useHistory } from 'react-router-dom';
 import SubredditsRandom from '../components/SubredditsRandom';
 import categories from '../assets/categories/Categories';
+import CategoriesList from '../components/CategoriesList';
+import CategoryTop from '../components/CategoryTop';
 
 const Subreddits = () => {
   let history = useHistory();
@@ -25,8 +27,16 @@ const Subreddits = () => {
     }
   };
   useEffect(() => {
-    console.log('passage useEffect');
+    console.log('passage 1',location.pathname)
+    if (location.pathname) {
+      console.log('passage')
+      const params = window.location.href.split('/');
+      const category = params[params.length - 1];
+      setSelectedCategory(category);
+      getSubredditsByCategory(category);
+    }
     return history.listen((location) => {
+      console.log('passage', location.pathname);
       const params = location.pathname.split('/');
       const category = params[params.length - 1];
       setSelectedCategory(category);
@@ -37,49 +47,13 @@ const Subreddits = () => {
     <Container>
       <Row>
         <Col lg={2} md={12} sm={12}>
-          <div className="card-reddit">
-            <h5>Categories</h5>
-            {selectedCategory}
-            <hr />
-            {['All Categories', ...categories].map((category, index) => {
-              return (
-                <div
-                  key={index}
-                  className={
-                    category === selectedCategory
-                      ? 'selected-category pointer'
-                      : 'pointer category'
-                  }
-                  onClick={() =>
-                    setSelectedCategory(category) &
-                    getSubredditsByCategory(category)
-                  }
-                >
-                  {category}
-                </div>
-              );
-            })}
-          </div>
+          <CategoriesList selectedCategory={selectedCategory} />
         </Col>
         <Col lg={6} md={12} sm={12}>
-          <div className="card-reddit">
-            <h5>Today's Top Growing Subreddits</h5>
-            <hr />
-            {Object.values(subreddits).map((subreddit, index) => {
-              return (
-                <Link to={`/subreddit/${subreddit.subreddit}`}>
-                  <div key={index} className="pointer categories">
-                    <img
-                      className="subreddit-thumbnail"
-                      src={`http://localhost:4000/uploads/subreddits/photo/${subreddit.photoUrl}`}
-                      alt="img-default"
-                    />{' '}
-                    subreddit/{subreddit.subreddit}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <CategoryTop
+            subreddits={subreddits}
+            selectedCategory={selectedCategory}
+          />
         </Col>
         <Col lg={4} md={12} sm={12}>
           <SubredditsRandom />
