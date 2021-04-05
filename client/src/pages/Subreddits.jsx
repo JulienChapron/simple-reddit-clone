@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { getPublic } from '../utils/RequestPublic';
-import { Link,useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SubredditsRandom from '../components/SubredditsRandom';
 import categories from '../assets/categories/Categories';
 
@@ -11,35 +11,35 @@ const Subreddits = () => {
   const [subreddits, setSubreddits] = useState([]);
   const getSubredditsByCategory = async (category) => {
     try {
-      const response = await getPublic('subreddits/category/' + category);
-      setSubreddits(response.data);
-      setSelectedCategory(category)
-      history.push('/subreddits/' + category);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getSubreddits = async () => {
-    const params = window.location.href.split('/');
-    const category = params[params.length - 1];
-    try {
-      const response = await getPublic('subreddits/category/'+category);
-      setSubreddits(response.data);
-      setSelectedCategory(category)
-      history.push('/subreddits/' + category);
+      if (category !== 'All Categories') {
+        const response = await getPublic(
+          'subreddits/category/' + category.toLowerCase()
+        );
+        setSubreddits(response.data);
+      } else {
+        const response = await getPublic('subreddits');
+        setSubreddits(response.data);
+      }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getSubreddits();
-  }, []);
+    console.log('passage useEffect');
+    return history.listen((location) => {
+      const params = location.pathname.split('/');
+      const category = params[params.length - 1];
+      setSelectedCategory(category);
+      getSubredditsByCategory(category);
+    });
+  }, [history]);
   return (
     <Container>
       <Row>
         <Col lg={2} md={12} sm={12}>
           <div className="card-reddit">
             <h5>Categories</h5>
+            {selectedCategory}
             <hr />
             {['All Categories', ...categories].map((category, index) => {
               return (
@@ -50,11 +50,9 @@ const Subreddits = () => {
                       ? 'selected-category pointer'
                       : 'pointer category'
                   }
-                  to={`/subreddits/${category}`}
                   onClick={() =>
-                    category !== 'All Categories'
-                      ? getSubredditsByCategory(category.toLowerCase())
-                      : getSubreddits()
+                    setSelectedCategory(category) &
+                    getSubredditsByCategory(category)
                   }
                 >
                   {category}
