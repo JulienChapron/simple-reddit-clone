@@ -20,7 +20,7 @@ const HomePrivate = () => {
       const random = categories[Math.floor(Math.random() * categories.length)];
       setCategoryRandom(random);
       const response = await getPublic(
-        'subreddits/category/' + random.toLowerCase()
+        'subreddits/category/' + random.name.toLowerCase()
       );
       setSubredditsRandom(response.data);
     } catch (error) {

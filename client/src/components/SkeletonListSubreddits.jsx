@@ -5,10 +5,10 @@ const SkeletonListSubreddits = ({ array = [1] }) => {
     <div>
       {array.map((item) => (
         <div style={{ display: 'flex', marginBottom: '20px' }}>
-          <div class="skeleton-avatar"></div>
+          <div className="skeleton-avatar"></div>
           <div
             style={{ width: '100%', marginLeft: '5px' }}
-            class="skeleton-title"
+            className="skeleton-title"
           ></div>
         </div>
       ))}

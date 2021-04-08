@@ -137,3 +137,47 @@ exports.uploadImage = asyncHandler(async (req, res, next) => {
     }
   )
 })
+
+// @desc    Thumbnails user
+// @route   PUT /api/v1/auth/users/:username
+// @access  Private/Admin
+exports.uploadBackground = asyncHandler(async (req, res, next) => {
+  const subreddit = await Subreddit.findOne({ subreddit: req.params.subreddit });
+  if (!subreddit)
+    return next(new ErrorResponse(`No subreddit with subreddit of ${req.params.subreddit}`, 404))
+
+  if (!req.files) {
+    return next(new ErrorResponse(`Please upload a file`, 404))
+  }
+
+  const file = req.files.image
+  if (!file.mimetype.startsWith('image')) {
+    return next(new ErrorResponse(`Please upload an image file`, 404))
+  }
+
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new ErrorResponse(
+        `Please upload an image less than ${
+          process.env.MAX_FILE_UPLOAD / 1000 / 1000
+        }mb`,
+        404
+      )
+    )
+  }
+
+  file.name = `photo-${subreddit._id}${path.parse(file.name).ext}`
+
+  file.mv(
+    `${process.env.FILE_UPLOAD_PATH}/subreddits/background/${file.name}`,
+    async (err) => {
+      if (err) {
+        console.error(err)
+        return next(new ErrorResponse(`Problem with file upload`, 500))
+      }
+      await Subreddit.findByIdAndUpdate(subreddit._id, { backgroundUrl: file.name })
+      res.status(200).json({ success: true, data: file.name })
+    }
+  )
+})
+

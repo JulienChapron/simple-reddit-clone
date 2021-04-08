@@ -46,8 +46,8 @@ const PostView = () => {
       };
       const response = await methods(`posts/${id}`, 'PUT', data);
       setPost(response.data);
-      setEditPost(false)
-      set
+      setEditPost(false);
+      set;
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +75,15 @@ const PostView = () => {
       setComments(
         comments.filter((comment) => comment.id !== response.data.id)
       );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deletePost = async (e, id) => {
+    e.stopPropagation();
+    try {
+      const response = await methods('posts/' + id, 'DELETE');
+      history.push('/subreddit/' + post.subreddit);
     } catch (error) {
       console.log(error);
     }
@@ -136,7 +145,7 @@ const PostView = () => {
                   ) : undefined}
                   {post.imageUrl ? (
                     <img
-                      style={{ padding: '20px', width: '100%', height: 'auto' }}
+                      style={{ width: '100%', height: 'auto' }}
                       src={`http://localhost:4000/uploads/posts/images/${post.imageUrl}`}
                       alt="photo-posts"
                     />
@@ -147,7 +156,7 @@ const PostView = () => {
                       autostart
                       autoPlay
                       type="video/mp4"
-                      style={{ padding: '20px', width: '100%', height: 'auto' }}
+                      style={{ width: '100%', height: 'auto' }}
                       src={`http://localhost:4000/uploads/posts/videos/${post.videoUrl}`}
                       alt="photo-posts"
                     />
@@ -163,12 +172,14 @@ const PostView = () => {
                       value={textPost}
                       onChange={textChange}
                     />
-                    <div class="text-right">
+                    <div className="text-right">
                       <Button
                         className="mt-3"
                         variant="outline-secondary"
                         size="sm"
-                        onClick={() => (setEditPost(false) & setTextPost(post.text))}
+                        onClick={() =>
+                          setEditPost(false) & setTextPost(post.text)
+                        }
                       >
                         Cancel
                       </Button>
@@ -182,12 +193,22 @@ const PostView = () => {
                     </div>
                   </div>
                 ) : undefined}
+                {!post.videoUrl & !post.imageUrl ? (
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    onClick={() => setEditPost(true)}
+                  >
+                    edit
+                  </Button>
+                ) : undefined}
                 <Button
+                  className="mt-3"
+                  onClick={(e) => deletePost(e, post._id)}
                   variant="outline-secondary"
                   size="sm"
-                  onClick={() => setEditPost(true)}
                 >
-                  edit
+                  Remove
                 </Button>
               </div>
             ) : undefined}

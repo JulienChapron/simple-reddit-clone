@@ -12,21 +12,16 @@ const PostsList = (props) => {
   let history = useHistory();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [key, setKey] = useState(null);
   const showPost = (id, title, subreddit) => {
-    if (!key) {
-      if (subreddit !== null)
-        history.push(
-          '/subreddit/' + subreddit + '/comments/' + id + '/' + title
-        );
-      else
-        history.push(
-          '/user/' + auth.data.data.username + '/comments/' + id + '/' + title
-        );
-    }
+    if (subreddit !== null)
+      history.push('/subreddit/' + subreddit + '/comments/' + id + '/' + title);
+    else
+      history.push(
+        '/user/' + auth.data.data.username + '/comments/' + id + '/' + title
+      );
   };
-  const deletePost = async (id) => {
-    setKey('delete');
+  const deletePost = async (e, id) => {
+    e.stopPropagation();
     try {
       const response = await methods('posts/' + id, 'DELETE');
       setPosts(posts.filter((x) => x._id !== response.data));
@@ -35,7 +30,6 @@ const PostsList = (props) => {
     }
   };
   const getPosts = async () => {
-    setKey(null);
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
@@ -59,14 +53,12 @@ const PostsList = (props) => {
           posts.map((post, index) => {
             return (
               <div
+                onClick={() => showPost(post._id, post.title, post.subreddit)}
                 key={index}
                 style={{ padding: '10px', cursor: 'pointer' }}
                 className="card-reddit"
               >
-                <div
-                  onClick={() => showPost(post._id, post.title, post.subreddit)}
-                  style={{ display: 'flex', lineHeight: '30px' }}
-                >
+                <div style={{ display: 'flex', lineHeight: '30px' }}>
                   <p
                     style={{
                       fontSize: '12px',
@@ -109,7 +101,7 @@ const PostsList = (props) => {
                   ) : undefined}
                   {post.imageUrl ? (
                     <img
-                      style={{ padding: '20px', width: '100%', height: 'auto' }}
+                      style={{ width: '100%', height: 'auto' }}
                       src={`http://localhost:4000/uploads/posts/images/${post.imageUrl}`}
                       alt="photo-posts"
                     />
@@ -117,7 +109,7 @@ const PostsList = (props) => {
                   {post.videoUrl ? (
                     <video
                       controls
-                      autostart
+                      autostart="true"
                       autoPlay
                       type="video/mp4"
                       style={{ padding: '20px', width: '100%', height: 'auto' }}
@@ -134,20 +126,28 @@ const PostsList = (props) => {
                   >
                     {post.comments} Comments
                   </Button>
-                  {auth.data.data._id === post.userId._id || auth.data.data._id === post.userId ? (
+                  {auth.data.data._id === post.userId._id ||
+                  auth.data.data._id === post.userId ? (
                     <span>
+                      {!post.imageUrl & !post.videoUrl ? (
+                        <Button
+                          onClick={() =>
+                            showPost(
+                              post._id,
+                              post.title,
+                              post.subreddit,
+                              'edit'
+                            )
+                          }
+                          className="mt-3 ml-2"
+                          variant="outline-secondary"
+                          size="sm"
+                        >
+                          Edit
+                        </Button>
+                      ) : undefined}
                       <Button
-                        onClick={() =>
-                          showPost(post._id, post.title, post.subreddit)
-                        }
-                        className="mt-3 ml-2"
-                        variant="outline-secondary"
-                        size="sm"
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => deletePost(post._id)}
+                        onClick={(e) => deletePost(e, post._id)}
                         className="mt-3 ml-2"
                         variant="outline-secondary"
                         size="sm"

@@ -31,6 +31,10 @@ const SubredditSchema = new Schema(
       type: String,
       default: "no-photo.jpeg",
     },
+    backgroundUrl: {
+      type: String,
+      default: "no-background.jpeg",
+    },
     userId: {
       type: mongoose.Schema.ObjectId,
       ref: "User",

@@ -9,18 +9,18 @@ const CategoriesList = (props) => {
     <div className="card-reddit">
       <h5>Categories</h5>
       <hr />
-      {['All Categories', ...categories].map((category, index) => {
+      {[{name: 'All Categories'}, ...categories].map((category, index) => {
         return (
           <div
             key={index}
             className={
-              category === props.selectedCategory
+              category.name === props.selectedCategory
                 ? 'selected-category pointer'
                 : 'pointer category'
             }
-            onClick={() => history.push(category)}
+            onClick={() => history.push(category.name)}
           >
-            {category}
+            {category.name}
           </div>
         );
       })}

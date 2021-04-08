@@ -4,6 +4,7 @@ const {
   getSubredditsByCategory,
   getSubreddit,
   uploadImage,
+  uploadBackground,
   createSubreddit,
   updateSubreddit,
   deleteSubreddit,
@@ -23,6 +24,7 @@ router
   .post(protect, createSubreddit);
 
 router.route('/:subreddit/image').post( uploadImage)
+router.route('/:subreddit/background').post( uploadBackground)
 
 router
   .route("/:subreddit")
