@@ -60,6 +60,7 @@ const CreatePost = () => {
           ? subreddits.map((subreddit, index) => {
               return (
                 <Dropdown.Item
+                  key={index}
                   onClick={() => changeEnv(`subreddit/${subreddit.title}`)}
                 >
                   {subreddit.title}

@@ -17,7 +17,10 @@ const CreateSubreddit = () => {
         {categories.length
           ? categories.map((category, index) => {
               return (
-                <Dropdown.Item onClick={() => setCategory(category.name)}>
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => setCategory(category.name)}
+                >
                   {category.name}
                 </Dropdown.Item>
               );
