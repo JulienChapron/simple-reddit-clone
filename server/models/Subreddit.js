@@ -27,13 +27,13 @@ const SubredditSchema = new Schema(
       type: String,
       required: [true, "Category is required"],
     },
-    photoUrl: {
+    avatarUrl: {
       type: String,
-      default: "no-photo.jpeg",
+      default: "no-avatar.png",
     },
     backgroundUrl: {
       type: String,
-      default: "no-background.jpeg",
+      default: "no-background.png",
     },
     userId: {
       type: mongoose.Schema.ObjectId,

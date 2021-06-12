@@ -126,7 +126,7 @@ exports.uploadImage = asyncHandler(async (req, res, next) => {
   file.name = `photo-${subreddit._id}${path.parse(file.name).ext}`
 
   file.mv(
-    `${process.env.FILE_UPLOAD_PATH}/subreddits/photo/${file.name}`,
+    `${process.env.FILE_UPLOAD_PATH}/subreddits/avatar/${file.name}`,
     async (err) => {
       if (err) {
         console.error(err)

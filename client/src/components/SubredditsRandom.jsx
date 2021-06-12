@@ -54,7 +54,7 @@ const SubredditsRandom = (props) => {
                     <div className="pointer categories">
                       <img
                         className="subreddit-thumbnail"
-                        src={`http://localhost:4000/uploads/subreddits/photo/${subreddit.photoUrl}`}
+                        src={`http://localhost:4000/uploads/subreddits/avatar/${subreddit.photoUrl}`}
                         alt="img-default"
                       />{' '}
                       subreddit/{subreddit.subreddit}

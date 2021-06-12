@@ -78,7 +78,7 @@ const PostsList = (props) => {
                               height: '30px',
                               borderRadius: '100%',
                             }}
-                            src={`http://localhost:4000/uploads/subreddits/photo/${post.subreddits[0].photoUrl}`}
+                            src={`http://localhost:4000/uploads/subreddits/avatar/${post.subreddits[0].photoUrl}`}
                             alt="user-avatar"
                           />
                         ) : undefined}

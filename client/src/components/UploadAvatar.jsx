@@ -5,7 +5,6 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import penIcon from '../assets/icons/pen.png';
 import axios from 'axios';
@@ -41,7 +40,7 @@ const SubredditAvatar = (props) => {
           'content-type': 'multipart/form-data',
         },
       };
-      console.log(props.type, 'user')
+      console.log(props.type, 'user');
       axios
         .post(
           `http://localhost:4000/api/v1/${
@@ -127,7 +126,9 @@ const SubredditAvatar = (props) => {
               height: '80px',
               borderRadius: '100%',
             }}
-            src={`http://localhost:4000/uploads/users/avatar/${props.data.avatarUrl}`}
+            src={`http://localhost:4000/uploads/${
+              props.type === 'user' ? 'users' : 'subreddits'
+            }/avatar/${props.data.avatarUrl}`}
             alt="image-subreddit"
           />
         )}
