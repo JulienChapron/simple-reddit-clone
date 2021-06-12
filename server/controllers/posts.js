@@ -32,7 +32,6 @@ exports.getPostsUser = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`No category with id of ${req.body.categoryId}`, 404)
     );
   }
-  console.log(posts, "posts");
   res.status(200).json({ success: true, data: posts });
 });
 
@@ -55,7 +54,6 @@ exports.getPostsSubreddit = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/posts/
 // @access  Private
 exports.createPost = asyncHandler(async (req, res, next) => {
-  console.log(req.body.title);
   const subreddit = await Subreddit.where("title", req.body.title);
   if (!subreddit) {
     return next(
@@ -77,7 +75,6 @@ exports.createPostMedias = asyncHandler(async (req, res, next) => {
     ...req.body,
     userId: req.user._id,
   });
-  console.log(req.files);
   const subreddit = await Subreddit.where("title", req.body.title);
   if (!subreddit) {
     return next(

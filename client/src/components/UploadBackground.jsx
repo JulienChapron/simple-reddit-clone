@@ -119,7 +119,9 @@ const UploadAvatar = (props) => {
         ) : (
           <img
             style={{ width: '100%', height: '100px' }}
-            src={`http://localhost:4000/uploads/${props.type}/background/${props.data.backgroundUrl}`}
+            src={`http://localhost:4000/uploads/${
+              props.type === 'user' ? 'users' : 'subreddits'
+            }/background/${props.data.backgroundUrl}`}
             alt="image-subreddit"
           />
         )}

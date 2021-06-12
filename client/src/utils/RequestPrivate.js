@@ -47,7 +47,6 @@ export const authenticate = async (type, data) => {
 };
 
 export const methods = async (type, method, body) => {
-  console.log(type, method, body)
   const backendUrl = `http://localhost:4000/api/v1/${type}`;
   const user = JSON.parse(localStorage.getItem('user'));
   const config = {

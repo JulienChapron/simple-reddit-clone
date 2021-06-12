@@ -31,7 +31,6 @@ exports.getCommentByPostId = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/comments/
 // @access  Private
 exports.createComment = asyncHandler(async (req, res, next) => {
-  console.log(req.body.postId)
   let post = await Post.findOne({
     _id: req.body.postId,
   })
@@ -99,6 +98,5 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`You are not authorized to delete this comment`, 400)
     )
   }
-  console.log(comment, 'comment')
   return res.status(200).json({ success: true, data: comment })
 })

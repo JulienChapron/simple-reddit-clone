@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Container, Col, Row, Form, Button } from 'react-bootstrap';
 import UserCard from '../components/UserCard';
+import SubredditCard from '../components/SubredditCard';
 import { useParams } from 'react-router-dom';
 import { getPublic } from '../utils/RequestPublic';
 import { methods } from '../utils/RequestPrivate';
@@ -50,7 +51,6 @@ const PostView = () => {
       const response = await methods(`posts/${id}`, 'PUT', data);
       setPost(response.data);
       setEditPost(false);
-      set;
     } catch (error) {
       console.log(error);
     }
@@ -205,16 +205,16 @@ const PostView = () => {
                     edit
                   </Button>
                 ) : undefined}
-                <Link to={'/subreddit/'+ post.subreddit}>
-                <Button
-                  className="mt-3"
-                  onClick={(e) => deletePost(e, post._id)}
-                  
-                  variant="outline-secondary"
-                  size="sm"
-                >
-                  Remove
-                </Button></Link>
+                <Link to={'/subreddit/' + post.subreddit}>
+                  <Button
+                    className="mt-3"
+                    onClick={(e) => deletePost(e, post._id)}
+                    variant="outline-secondary"
+                    size="sm"
+                  >
+                    Remove
+                  </Button>
+                </Link>
               </div>
             ) : undefined}
             <div className="card-reddit" style={{ marginBottom: '30px' }}>
@@ -293,7 +293,11 @@ const PostView = () => {
             </div>
           </Col>
           <Col lg={4} md={12} sm={12}>
-            <UserCard environment={type + '/' + name} />
+            {type === 'user' ? (
+              <UserCard environment={type + '/' + name} />
+            ) : (
+              <SubredditCard environment={type + '/' + name} />
+            )}
           </Col>
         </Row>
       </div>

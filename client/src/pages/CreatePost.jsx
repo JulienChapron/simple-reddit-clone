@@ -32,7 +32,6 @@ const CreatePost = () => {
     }
   };
   useEffect(() => {
-    console.log(environment);
     getSubreddit();
   }, []);
   return (

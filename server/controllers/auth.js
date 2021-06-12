@@ -60,7 +60,6 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/auth/me
 // @access  Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-  console.log('getMe passage')
   const user = req.user
 
   res.status(200).json({ success: true, data: user })
@@ -176,7 +175,6 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     })
     res.status(200).json({ success: true, data: 'Email sent' })
   } catch (err) {
-    console.log(err)
     user.resetPasswordToken = undefined
     user.resetPasswordExpire = undefined
 
@@ -195,8 +193,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     .createHash('sha256')
     .update(req.params.resettoken)
     .digest('hex')
-
-  console.log(resetPasswordToken)
 
   const user = await User.findOne({
     resetPasswordToken,
