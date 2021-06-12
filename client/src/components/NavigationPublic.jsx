@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   NavDropdown,
   Nav,
@@ -7,16 +7,22 @@ import {
   Form,
   FormControl,
   Navbar,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
 const Navigation = () => {
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand as={Link} to="/">Simple Reddit Clone</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/">
+        Simple Reddit Clone
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <FormControl
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+          />
         </Form>
         <Nav className="ml-auto">
           <Link to="/signin">
@@ -29,11 +35,7 @@ const Navigation = () => {
               Sign Up
             </Button>
           </Link>
-          <NavDropdown
-            alignRight="false"
-            title="Parameters"
-            id="basic-nav-dropdown"
-          >
+          <NavDropdown alignRight title="Parameters" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Theme</NavDropdown.Item>
           </NavDropdown>
         </Nav>

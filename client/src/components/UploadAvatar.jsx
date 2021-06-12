@@ -41,7 +41,7 @@ const SubredditAvatar = (props) => {
           'content-type': 'multipart/form-data',
         },
       };
-      console.log(props.data, 'user')
+      console.log(props.type, 'user')
       axios
         .post(
           `http://localhost:4000/api/v1/${

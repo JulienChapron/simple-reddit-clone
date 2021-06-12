@@ -11,7 +11,7 @@ const EditPost = () => {
 
   return (
     <div>
-      <InputGroup controlId="formBasicCreatePost">
+      <InputGroup controlid='controlid'>
         <Form.Control
           className="theme-input"
           onClick={createPostFunc}

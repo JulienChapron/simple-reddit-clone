@@ -10,11 +10,8 @@ const SubredditsRandom = (props) => {
   const getSubredditsRandom = async () => {
     try {
       const random =
-        categories[
-          Math.floor(Math.random() * Object.keys(categories).length)
-        ];
+        categories[Math.floor(Math.random() * Object.keys(categories).length)];
       setCategoryRandom(random);
-      console.log(random.name.toLowerCase())
       const response = await getPublic(
         'subreddits/category/' + random.name.toLowerCase()
       );
@@ -31,11 +28,10 @@ const SubredditsRandom = (props) => {
       <div style={{ height: '90px' }}>
         <div
           style={{
-            backgroundColor:`${categoryRandom.color}`,
+            backgroundColor: `${categoryRandom.color}`,
             height: '100%',
             width: '100%',
           }}
-
           alt="background"
         />
         <h5
@@ -53,7 +49,7 @@ const SubredditsRandom = (props) => {
           {subredditsRandom.length ? (
             Object.values(subredditsRandom).map((subreddit, index) => {
               return (
-                <div key={subreddit._id} >
+                <div key={index}>
                   <Link to={`/subreddit/${subreddit.subreddit}`}>
                     <div className="pointer categories">
                       <img
