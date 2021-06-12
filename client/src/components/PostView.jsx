@@ -6,6 +6,8 @@ import { getPublic } from '../utils/RequestPublic';
 import { methods } from '../utils/RequestPrivate';
 import Moment from 'react-moment';
 import { authContext } from './../contexts/Auth';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const PostView = () => {
   const messagesEndRef = useRef(null);
@@ -13,6 +15,7 @@ const PostView = () => {
   let { id } = useParams();
   let { type } = useParams();
   let { name } = useParams();
+  let history = useHistory();
   const [editPost, setEditPost] = useState(false);
   const [post, setPost] = useState(null);
   const [textPost, setTextPost] = useState('');
@@ -83,7 +86,6 @@ const PostView = () => {
     e.stopPropagation();
     try {
       const response = await methods('posts/' + id, 'DELETE');
-      history.push('/subreddit/' + post.subreddit);
     } catch (error) {
       console.log(error);
     }
@@ -195,6 +197,7 @@ const PostView = () => {
                 ) : undefined}
                 {!post.videoUrl & !post.imageUrl ? (
                   <Button
+                    className="mt-3 mr-2"
                     variant="outline-secondary"
                     size="sm"
                     onClick={() => setEditPost(true)}
@@ -202,14 +205,16 @@ const PostView = () => {
                     edit
                   </Button>
                 ) : undefined}
+                <Link to={'/subreddit/'+ post.subreddit}>
                 <Button
                   className="mt-3"
                   onClick={(e) => deletePost(e, post._id)}
+                  
                   variant="outline-secondary"
                   size="sm"
                 >
                   Remove
-                </Button>
+                </Button></Link>
               </div>
             ) : undefined}
             <div className="card-reddit" style={{ marginBottom: '30px' }}>

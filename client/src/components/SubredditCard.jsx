@@ -26,7 +26,7 @@ const SubredditCard = (props) => {
   }, []);
   return (
     <div>
-      {subreddit !== null ? (
+      {subreddit !== null && subreddit !== undefined ? (
         <div style={{ padding: '0px' }} className="card-reddit">
           <UploadBackground data={subreddit} admin={admin} type="subreddits" />
           <UploadAvatar data={subreddit} admin={admin} type="subreddits" />

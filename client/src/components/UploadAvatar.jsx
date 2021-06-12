@@ -41,9 +41,14 @@ const SubredditAvatar = (props) => {
           'content-type': 'multipart/form-data',
         },
       };
+      console.log(props.data, 'user')
       axios
         .post(
-          `http://localhost:4000/api/v1/subreddits/${props.data.subreddit}/image`,
+          `http://localhost:4000/api/v1/${
+            props.type === 'user'
+              ? 'users/' + props.data.username
+              : 'subreddits/' + props.data.subreddit
+          }/image`,
           formData,
           config
         )
@@ -122,14 +127,14 @@ const SubredditAvatar = (props) => {
               height: '80px',
               borderRadius: '100%',
             }}
-            src={`http://localhost:4000/uploads/subreddits/photo/${props.data.photoUrl}`}
+            src={`http://localhost:4000/uploads/users/avatar/${props.data.avatarUrl}`}
             alt="image-subreddit"
           />
         )}
       </div>
       <img
         style={{
-          cursor:'pointer',
+          cursor: 'pointer',
           position: 'absolute',
           top: '40px',
           left: '50px',

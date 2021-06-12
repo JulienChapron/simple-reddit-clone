@@ -15,7 +15,6 @@ const UserCard = (props) => {
   const { auth } = useContext(authContext);
 
   const getUser = async () => {
-    console.log(props.environment, 'props.environment');
     let usernameSplit = props.environment.split('/');
     let username = usernameSplit[usernameSplit.length - 1];
     try {
@@ -28,27 +27,6 @@ const UserCard = (props) => {
     } catch (error) {
       console.log(error);
     }
-  };
-  const onChangeUpload = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    const config = {
-      headers: {
-        authorization: `Bearer ${user.token}`,
-        'content-type': 'multipart/form-data',
-      },
-    };
-    axios
-      .post(
-        `http://localhost:4000/api/v1/users/${user.username}/image`,
-        formData,
-        config
-      )
-      .then((response) => {
-        setUrl(response.data.data);
-      })
-      .catch((error) => {});
   };
   useEffect(() => {
     getUser();

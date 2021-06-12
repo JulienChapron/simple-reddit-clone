@@ -7,6 +7,7 @@ const HomePublic = () => {
       <Row>
         <Col lg={8} md={6} sm={12}>
           <div className="card-reddit">Top new / by day, month, year, all</div>
+          <p>test</p>
           <div className="card-reddit">List post (inifinite loop)</div>
         </Col>
         <Col lg={4} md={6} sm={12}>

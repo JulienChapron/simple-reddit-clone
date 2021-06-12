@@ -14,16 +14,18 @@ const CreateSubreddit = () => {
         id="dropdown-basic-button"
         title={category ? category : 'Choose a category'}
       >
-        {categories.map((category, index) => {
-          return (
-            <Dropdown.Item onClick={() => setCategory(category)}>
-              {category}
-            </Dropdown.Item>
-          );
-        })}
+        {categories.length
+          ? categories.map((category, index) => {
+              return (
+                <Dropdown.Item onClick={() => setCategory(category.name)}>
+                  {category.name}
+                </Dropdown.Item>
+              );
+            })
+          : null}
       </DropdownButton>
       <div className="card-reddit">
-        <SubredditForm category={category}/>
+        <SubredditForm category={category} />
       </div>
     </Container>
   );

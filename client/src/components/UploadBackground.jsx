@@ -42,7 +42,11 @@ const UploadAvatar = (props) => {
       };
       axios
         .post(
-          `http://localhost:4000/api/v1/subreddits/${props.data.subreddit}/background`,
+          `http://localhost:4000/api/v1/${
+            props.type === 'user'
+              ? 'users/' + props.user.username
+              : 'subreddits/' + props.data.subreddit
+          }/background`,
           formData,
           config
         )
