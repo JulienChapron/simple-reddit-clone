@@ -63,7 +63,7 @@ const Post = () => {
       <Button
         variant="outline-secondary"
         disabled={
-          text.length && title.length && environment == 'Home' ? true : false
+          !text.length || !title.length || environment == 'Home' ? true : false
         }
         onClick={handleSubmit}
       >

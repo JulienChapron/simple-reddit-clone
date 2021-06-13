@@ -67,7 +67,7 @@ const SubredditForm = (props) => {
       <p className="text-danger">{error}</p>
       <Button
         disabled={!description || !title || !props.category || !subreddit}
-        variant="primary"
+        variant="outline-secondary"
         onClick={handleSubmit}
       >
         Add Subreddit

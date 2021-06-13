@@ -60,8 +60,10 @@ const Link = () => {
         />
       </Form.Group>
       <Button
+        disabled={
+          !title.length || !link.length || environment == 'Home' ? true : false
+        }
         variant="outline-secondary"
-        variant="primary"
         onClick={handleSubmit}
       >
         Post

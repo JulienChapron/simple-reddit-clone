@@ -33,8 +33,6 @@ const PostsList = (props) => {
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
-        console.log(response.data)
-
         setPosts(response.data);
       } else {
         const response = await getPublic('posts/' + props.environment);

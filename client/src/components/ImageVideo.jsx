@@ -62,7 +62,11 @@ const ImageVideo = () => {
           <input onChange={(e) => onChangeFile(e)} type="file" id="myImage" />
         </label>
       </Form.Group>
-      <Button onClick={handleSubmit} variant="outline-secondary">
+      <Button
+        disabled={!title.length || !file || environment == 'Home' ? true : false}
+        onClick={handleSubmit}
+        variant="outline-secondary"
+      >
         Post
       </Button>
     </div>
