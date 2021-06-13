@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-mongo-sanitize": "^2.0.2",
-    "express-validator": "^5.3.1",
+    "express-validator": "^6.5.0",
     "helmet": "^4.4.1",
     "hpp": "^0.2.3",
     "install": "^0.13.0",
