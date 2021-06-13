@@ -33,6 +33,8 @@ const PostsList = (props) => {
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
+        console.log(response.data)
+
         setPosts(response.data);
       } else {
         const response = await getPublic('posts/' + props.environment);
@@ -70,7 +72,7 @@ const PostsList = (props) => {
                     post.subreddit !== null &&
                     post.subreddits !== undefined ? (
                       <span style={{ marginRight: '10px' }}>
-                        {post.subreddits.photoUrl ? (
+                        {post.subreddits.avatarUrl ? (
                           <img
                             style={{
                               verticalAlign: 'middle',
@@ -78,7 +80,7 @@ const PostsList = (props) => {
                               height: '30px',
                               borderRadius: '100%',
                             }}
-                            src={`http://localhost:4000/uploads/subreddits/avatar/${post.subreddits[0].photoUrl}`}
+                            src={`http://localhost:4000/uploads/subreddits/avatar/${post.subreddits[0].avatarUrl}`}
                             alt="user-avatar"
                           />
                         ) : undefined}

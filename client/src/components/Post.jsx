@@ -62,7 +62,9 @@ const Post = () => {
       </Form.Group>
       <Button
         variant="outline-secondary"
-        disabled={!text || !title || !environment ? true : false}
+        disabled={
+          text.length && title.length && environment == 'Home' ? true : false
+        }
         onClick={handleSubmit}
       >
         Post

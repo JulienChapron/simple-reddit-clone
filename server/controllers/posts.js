@@ -24,7 +24,7 @@ exports.getPostsUser = asyncHandler(async (req, res, next) => {
     );
   const posts = await Post.where("userId", user._id)
     .populate({ path: "userId", select: "avatarUrl username" })
-    .populate({ path: "subreddits", select: "photoUrl" })
+    .populate({ path: "subreddits", select: "avatarUrl" })
     .populate({ path: "comments", select: "id" })
     .sort("-createdAt");
   if (!posts) {

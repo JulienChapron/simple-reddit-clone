@@ -31,7 +31,8 @@ const SubredditCard = (props) => {
           <UploadBackground data={subreddit} admin={admin} type="subreddits" />
           <UploadAvatar data={subreddit} admin={admin} type="subreddits" />
           <div style={{ marginTop: '40px', padding: '10px' }}>
-            <p className="font-weight-bold">{subreddit.description}</p>
+            <p style={{ minHeight: '30px' }}>{subreddit.description}</p>
+            <p style={{ minHeight: '30px' }}>0 members</p>
             {admin ? (
               <Button
                 as={Link}

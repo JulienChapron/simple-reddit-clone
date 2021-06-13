@@ -118,7 +118,7 @@ exports.uploadChannelAvatar = asyncHandler(async (req, res, next) => {
       }
 
       // await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name })
-      req.user.photoUrl = file.name
+      req.user.avatarUrl = file.name
       await req.user.save()
       res.status(200).json({ success: true, data: file.name })
     }

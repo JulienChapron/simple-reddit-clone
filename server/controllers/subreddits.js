@@ -132,7 +132,7 @@ exports.uploadImage = asyncHandler(async (req, res, next) => {
         console.error(err)
         return next(new ErrorResponse(`Problem with file upload`, 500))
       }
-      await Subreddit.findByIdAndUpdate(subreddit._id, { photoUrl: file.name })
+      await Subreddit.findByIdAndUpdate(subreddit._id, { avatarUrl: file.name })
       res.status(200).json({ success: true, data: file.name })
     }
   )

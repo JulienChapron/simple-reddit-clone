@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { environmentContext } from '../contexts/Environment';
 import { useHistory } from 'react-router-dom';
 import { authContext } from './../contexts/Auth';
-import axios from "axios";
+import axios from 'axios';
 
 const ImageVideo = () => {
   let history = useHistory();
@@ -13,11 +13,11 @@ const ImageVideo = () => {
   const { auth } = useContext(authContext);
 
   const onChangeTitle = (e) => {
-    setTitle(e.target.value)
-  }
+    setTitle(e.target.value);
+  };
   const onChangeFile = (e) => {
-    setFile(e.target.files[0])
-  }
+    setFile(e.target.files[0]);
+  };
   const handleSubmit = async (e) => {
     let env = environment;
     env = env.split('/');
@@ -37,11 +37,7 @@ const ImageVideo = () => {
       },
     };
     axios
-      .post(
-        `http://localhost:4000/api/v1/posts/medias`,
-        formData,
-        config
-      )
+      .post(`http://localhost:4000/api/v1/posts/medias`, formData, config)
       .then((response) => {
         if (response.data) {
           history.push('/' + environment);
@@ -54,12 +50,17 @@ const ImageVideo = () => {
   return (
     <div className="mt-3">
       <Form.Group controlId="formBasicImageVideo">
-        <Form.Control value={title} onChange={onChangeTitle} type="text" placeholder="Title" />
+        <Form.Control
+          value={title}
+          onChange={onChangeTitle}
+          type="text"
+          placeholder="Title"
+        />
       </Form.Group>
       <Form.Group controlId="formBasicImageVideo">
-      <label htmlFor="myImage">
-        <input onChange={onChangeFile} type="file" id="myImage" />
-      </label>
+        <label htmlFor="myImage">
+          <input onChange={(e) => onChangeFile(e)} type="file" id="myImage" />
+        </label>
       </Form.Group>
       <Button onClick={handleSubmit} variant="outline-secondary">
         Post

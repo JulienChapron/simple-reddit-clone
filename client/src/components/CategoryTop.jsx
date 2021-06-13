@@ -10,12 +10,12 @@ const CategoryTop = (props) => {
       {props.subreddits.length ? (
         Object.values(props.subreddits).map((subreddit) => {
           return (
-            <div key={subreddit.photoUrl}>
+            <div key={subreddit.avatarUrl}>
               <Link to={`/subreddit/${subreddit.subreddit}`}>
                 <div className="pointer categories">
                   <img
                     className="subreddit-thumbnail"
-                    src={`http://localhost:4000/uploads/subreddits/avatar/${subreddit.photoUrl}`}
+                    src={`http://localhost:4000/uploads/subreddits/avatar/${subreddit.avatarUrl}`}
                     alt="img-default"
                   />{' '}
                   subreddit/{subreddit.subreddit}
