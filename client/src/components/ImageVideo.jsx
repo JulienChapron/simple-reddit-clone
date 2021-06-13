@@ -52,7 +52,7 @@ const ImageVideo = () => {
       <Form.Group controlId="formBasicImageVideo">
         <Form.Control
           value={title}
-          onChange={onChangeTitle}
+          onChange={(e) => onChangeTitle(e)}
           type="text"
           placeholder="Title"
         />
