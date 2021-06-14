@@ -47,7 +47,7 @@ const PostsList = (props) => {
     if (props.environment) getPosts();
   }, [props.environment]);
   return (
-    <div>
+    <div style={{ marginBottom: '20px' }}>
       {!loading && posts !== undefined ? (
         posts.length ? (
           posts.map((post, index) => {

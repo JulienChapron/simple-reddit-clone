@@ -36,22 +36,24 @@ const UserCard = (props) => {
       {user !== null && url ? (
         <div style={{ padding: '0px' }} className="card-reddit">
           <UploadBackground data={user} admin={admin} type="user" />
-          <UploadAvatar data={user} admin={admin} type="user" />
-          <p>user/{user.username}</p>
-          <p style={{ fontWeight: 'bold' }}>Cake Day</p>
-          <Moment format="YYYY/MM/DD" local>
-            {user.createdAt}
-          </Moment>
-          <div style={{ width: '100%' }}></div>
-          <Button
-            as={Link}
-            to="/create-post"
-            block
-            className="mt-2"
-            variant="outline-secondary"
-          >
-            Create Post
-          </Button>
+          <div style={{ padding: '10px' }}>
+            <UploadAvatar data={user} admin={admin} type="user" />
+            <p style={{ marginTop: '30px' }}>user/{user.username}</p>
+            <p style={{ fontWeight: 'bold' }}>Cake Day</p>
+            <Moment format="YYYY/MM/DD" local>
+              {user.createdAt}
+            </Moment>
+            <div style={{ width: '100%' }}></div>
+            <Button
+              as={Link}
+              to="/create-post"
+              block
+              className="mt-2"
+              variant="outline-secondary"
+            >
+              Create Post
+            </Button>
+          </div>
         </div>
       ) : (
         ''

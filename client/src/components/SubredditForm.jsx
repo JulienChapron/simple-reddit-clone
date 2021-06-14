@@ -21,7 +21,7 @@ const SubredditForm = (props) => {
   const handleSubmit = async () => {
     const data = {
       title: title,
-      subreddit: subreddit,
+      subreddit: subreddit.replace(/ /g,"-"),
       description: description,
       category: props.category.toLowerCase(),
     };
@@ -31,7 +31,8 @@ const SubredditForm = (props) => {
         history.push('/subreddit/'+response.data.subreddit);
         setAuthToken(response);
       } else {
-        setError(response);
+        if(response[0].message) setError(response[0].message)
+        else setError(response)
       }
     } catch (error) {
       console.log(error);
