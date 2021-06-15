@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import penIcon from '../assets/icons/pen.png';
+import cameraIcon from '../assets/icons/camera.png';
 import axios from 'axios';
 import { authContext } from '../contexts/Auth';
 import ReactCrop from 'react-image-crop';
@@ -136,6 +136,7 @@ const SubredditAvatar = (props) => {
         style={{
           cursor: 'pointer',
           position: 'absolute',
+          padding:'5px',
           top: '40px',
           left: '50px',
           background: '#fff',
@@ -144,7 +145,7 @@ const SubredditAvatar = (props) => {
           width: '35px',
           borderRadius: '100%',
         }}
-        src={penIcon}
+        src={cameraIcon}
         onClick={handleShow}
         className="icon"
         alt="icon-pen"

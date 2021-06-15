@@ -1,16 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import SubredditCard from '../components/SubredditCard';
-import { environmentContext } from '../contexts/Environment';
 import PostsList from '../components/PostsList';
 import EditPost from '../components/EditPost';
 
 const Subreddit = () => {
-  const { environment, setEnvironmentContext } = useContext(environmentContext);
+  const [environment, setEnvironment] = useState(null)
   const env = () => {
     const params = window.location.href.split('/');
-    const subreddit = params[params.length - 1];
-    setEnvironmentContext('subreddit/' + subreddit);
+    const env = params[params.length - 1];
+    setEnvironment(env)
   };
   useEffect(() => {
     env();
@@ -22,10 +21,10 @@ const Subreddit = () => {
           <div className="card-reddit">
             <EditPost />
           </div>
-          <PostsList environment={environment} />
+          <PostsList environment={'subreddit/'+ environment} />
         </Col>
         <Col lg={4} md={12} sm={12}>
-          <SubredditCard />
+          <SubredditCard environment={'subreddit/' + environment}/>
         </Col>
       </Row>
     </Container>

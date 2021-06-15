@@ -294,9 +294,9 @@ const PostView = () => {
           </Col>
           <Col lg={4} md={12} sm={12}>
             {type === 'user' ? (
-              <UserCard environment={type + '/' + name} />
+              <UserCard environment={'user/' + name} />
             ) : (
-              <SubredditCard environment={type + '/' + name} />
+              <SubredditCard environment={'subreddits/' + name} />
             )}
           </Col>
         </Row>

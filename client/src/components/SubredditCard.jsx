@@ -12,11 +12,11 @@ const SubredditCard = (props) => {
   const [admin, setAdmin] = useState(false);
   const getSubreddit = async () => {
     const params = window.location.href.split('/');
-    const subreddit = params[params.length - 1];
+    const subreddit = params[1];
     try {
       const response = await getPublic('subreddits/' + subreddit);
       setSubreddit(response.data[0]);
-      if (response.data[0].userId === auth.data.data._id) setAdmin(true);
+      if (response.data[0] && response.data[0].userId === auth.data.data._id) setAdmin(true);
     } catch (error) {
       console.log(error);
     }

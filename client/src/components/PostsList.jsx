@@ -13,12 +13,15 @@ const PostsList = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const showPost = (id, title, subreddit) => {
-    if (subreddit !== null)
+    console.log(subreddit, 'subreddit')
+    if (subreddit !== null) {
+      
       history.push('/subreddit/' + subreddit + '/comments/' + id + '/' + title);
-    else
+    } else {
       history.push(
         '/user/' + auth.data.data.username + '/comments/' + id + '/' + title
       );
+    }
   };
   const deletePost = async (e, id) => {
     e.stopPropagation();
@@ -33,9 +36,11 @@ const PostsList = (props) => {
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
+        console.log(response.data, 'response.data new')
         setPosts(response.data);
       } else {
         const response = await getPublic('posts/' + props.environment);
+        console.log(response.data, 'response.data postslist')
         setPosts(response.data);
       }
       setLoading(false);

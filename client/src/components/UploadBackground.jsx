@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import penIcon from '../assets/icons/pen.png';
+import cameraIcon from '../assets/icons/camera.png';
 import axios from 'axios';
 import { authContext } from '../contexts/Auth';
 import ReactCrop from 'react-image-crop';
@@ -138,7 +138,7 @@ const UploadAvatar = (props) => {
           width: '35px',
           borderRadius: '100%',
         }}
-        src={penIcon}
+        src={cameraIcon}
         onClick={handleShow}
         className="icon"
         alt="icon-pen"
