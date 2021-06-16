@@ -12,11 +12,14 @@ const SubredditCard = (props) => {
   const [admin, setAdmin] = useState(false);
   const getSubreddit = async () => {
     const params = window.location.href.split('/');
-    const subreddit = params[1];
+    const subreddit = params[4];
     try {
       const response = await getPublic('subreddits/' + subreddit);
       categories.map((category) => {
-        if (response.data[0].category === category.name.toLowerCase()) {
+        if (
+          response.data[0].category.toLowerCase() ===
+          category.name.toLowerCase()
+        ) {
           setBackgrounColorCategory(category.color);
         }
       });
@@ -35,7 +38,11 @@ const SubredditCard = (props) => {
       {subreddit !== null && subreddit !== undefined ? (
         <div style={{ padding: '0px' }} className="card-reddit">
           <div
-            style={{ backgroundColor: backgrounColorCategory, padding: '10px' }}
+            style={{
+              color: '#fff',
+              backgroundColor: backgrounColorCategory,
+              padding: '10px',
+            }}
           >
             About the community
           </div>
