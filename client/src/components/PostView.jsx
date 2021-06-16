@@ -59,6 +59,7 @@ const PostView = () => {
     try {
       const response = await getPublic(`posts/${id}`);
       setPost(response.data);
+      console.log(response.data, 'teststteetste')
       setTextPost(response.data.text);
     } catch (error) {
       console.log(error);

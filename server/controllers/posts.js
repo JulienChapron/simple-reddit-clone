@@ -9,7 +9,9 @@ const path = require("path");
 // @route   GET /api/v1/videos/public or /api/v1/videos/private
 // @access  Public Or Private
 exports.getPostsFilteredByNew = asyncHandler(async (req, res, next) => {
-  const posts = await Post.find().populate({ path: "comments", select: "id" }).sort("-createdAt");
+  const posts = await Post.find()
+    .populate({ path: "comments", select: "id" })
+    .sort("-createdAt");
   res.status(200).json({ success: true, data: posts });
 });
 
@@ -147,7 +149,10 @@ exports.createPostMedias = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/videos/:id
 // @access  Public
 exports.getPost = asyncHandler(async (req, res, next) => {
-  const post = await Post.findById(req.params.id)
+  const post = await Post.findById(req.params.id).populate({
+    path: "userId",
+    select: "avatarUrl username",
+  });
   if (!post) {
     return next(new ErrorResponse(`No post with that id of ${req.params.id}`));
   }
@@ -173,9 +178,9 @@ exports.putPost = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.deletePost = asyncHandler(async (req, res, next) => {
   let post = await Post.findByIdAndDelete(req.params.id);
-  
+
   if (!post) {
     return next(new ErrorResponse(`No post with id of ${req.params.id}`, 404));
   }
-  res.status(200).json({ success: true, data: post.id});
+  res.status(200).json({ success: true, data: post.id });
 });
