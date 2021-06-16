@@ -10,11 +10,10 @@ import { authContext } from './../contexts/Auth';
 const PostsList = (props) => {
   const { auth } = useContext(authContext);
   let history = useHistory();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
   const showPost = (id, title, subreddit) => {
     if (subreddit !== null) {
-      
       history.push('/subreddit/' + subreddit + '/comments/' + id + '/' + title);
     } else {
       history.push(
@@ -32,11 +31,13 @@ const PostsList = (props) => {
     }
   };
   const getPosts = async () => {
+    console.log(props.environment, 'TEST');
+
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
         setPosts(response.data);
-      } else {
+      } else if (props.environment !== 'subreddit/null') {
         const response = await getPublic('posts/' + props.environment);
         setPosts(response.data);
       }
@@ -50,7 +51,7 @@ const PostsList = (props) => {
   }, [props.environment]);
   return (
     <div style={{ marginBottom: '20px' }}>
-      {!loading && posts !== undefined ? (
+      {posts !== null && !loading ? (
         posts.length ? (
           posts.map((post, index) => {
             return (
