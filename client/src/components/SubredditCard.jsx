@@ -4,22 +4,23 @@ import { Button } from 'react-bootstrap';
 import { authContext } from '../contexts/Auth';
 import { getPublic } from '../utils/RequestPublic';
 import categories from '../assets/categories/Categories';
+import { environmentContext } from '../contexts/Environment';
 
 const SubredditCard = (props) => {
   const { auth } = useContext(authContext);
+  const { environment, setEnvironmentContext } = useContext(environmentContext);
   const [subreddit, setSubreddit] = useState(null);
   const [backgrounColorCategory, setBackgrounColorCategory] = useState(null);
   const [admin, setAdmin] = useState(false);
   const getSubreddit = async () => {
     const params = window.location.href.split('/');
     const subreddit = params[4];
+    setEnvironmentContext('subreddit/' + subreddit);
     try {
       const response = await getPublic('subreddits/' + subreddit);
       categories.map((category) => {
-        if (
-          response.data[0].category.toLowerCase() ===
-          category.name.toLowerCase()
-        ) {
+        console.log();
+        if (response.data[0].category === category.name.toLowerCase()) {
           setBackgrounColorCategory(category.color);
         }
       });

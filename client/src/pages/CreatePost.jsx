@@ -5,14 +5,17 @@ import {
   Dropdown,
   Tabs,
   Tab,
+  Button,
 } from 'react-bootstrap';
 import { getPublic } from '../utils/RequestPublic';
 import { environmentContext } from '../contexts/Environment';
 import Post from '../components/Post';
 import ImageVideo from '../components/ImageVideo';
-import Link from '../components/Link';
+import LinkComponent from '../components/Link';
+import { Link } from 'react-router-dom';
 import { authContext } from './../contexts/Auth';
 import { themeContext } from '../contexts/Theme';
+import arrowLeftIcon from '../assets/icons/arrow-left.png';
 
 const CreatePost = () => {
   const [key, setKey] = useState('post');
@@ -36,7 +39,31 @@ const CreatePost = () => {
   }, []);
   return (
     <Container>
-      <h4 className="mt-2">Create a post</h4>
+      <div style={{ display: 'flex' }}>
+        <Button
+          style={{
+            padding: '0px',
+            margin: '0px',
+            marginTop: '10px',
+            marginRight: '10px',
+          }}
+          variant="link"
+          as={Link}
+          to={environment}
+        >
+          <img
+            style={{
+              cursor: 'pointer',
+              height: '28px',
+              width: '28px',
+            }}
+            src={arrowLeftIcon}
+            className="icon"
+            alt="icon-arrow-left"
+          />
+        </Button>
+        <h4 className="mt-2">Create a post</h4>
+      </div>
       <DropdownButton
         className="mt-2"
         variant={theme === 'dark' ? 'outline-secondary' : 'light'}
@@ -81,7 +108,7 @@ const CreatePost = () => {
             <ImageVideo />
           </Tab>
           <Tab eventKey="linkLink" title="Link">
-            <Link />
+            <LinkComponent />
           </Tab>
         </Tabs>
       </div>
