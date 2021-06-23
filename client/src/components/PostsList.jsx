@@ -31,8 +31,6 @@ const PostsList = (props) => {
     }
   };
   const getPosts = async () => {
-    console.log(props.environment, 'TEST');
-
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
@@ -66,14 +64,12 @@ const PostsList = (props) => {
                     style={{
                       fontSize: '12px',
                       color: 'grey',
-                      fontWeight: 'bold',
                     }}
                   >
                     {props.environment.split('/')[0] === 'user' &&
-                    post.subreddit !== null &&
-                    post.subreddits !== undefined ? (
-                      <span style={{ marginRight: '10px' }}>
-                        {post.subreddits.avatarUrl ? (
+                    post.subreddits.length ? (
+                      <span>
+                        {post.subreddits.length ? (
                           <img
                             style={{
                               verticalAlign: 'middle',
@@ -85,14 +81,19 @@ const PostsList = (props) => {
                             alt="user-avatar"
                           />
                         ) : undefined}
-                        subreddit/{post.subreddit}
+                        <span
+                          class="post"
+                          style={{fontWeight:'bold', marginLeft: '5px',marginRight: '10px' }}
+                        >
+                          subreddit/{post.subreddit}{' '}.{' '}
+                        </span>
                       </span>
                     ) : null}
-                    <span style={{ marginRight: '10px' }}>
+                    <span>
                       Posted by user/{post.userId.username}
                     </span>
                     <span>
-                      <Moment fromNow>{post.createdAt}</Moment>
+                    {' '}-{' '}<Moment fromNow>{post.createdAt}</Moment>
                     </span>
                   </p>
                 </div>

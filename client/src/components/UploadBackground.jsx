@@ -30,6 +30,9 @@ const UploadAvatar = (props) => {
     }
     let file = null;
     canvas.toBlob((blob) => {
+      if(props.type==='user') {
+        setCrop({ unit: '%', width: 100, aspect: 30 / 5 })
+      }
       file = new File([blob], 'fileName.jpg', { type: 'image/jpeg' });
       setLoading(true);
       const formData = new FormData();

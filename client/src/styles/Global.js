@@ -28,6 +28,9 @@ body {
     background: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
   }
+  .post{
+    color: ${({ theme }) => theme.text};
+  }
   .card-reddit {
     border-radius: 4px;
     padding: 10px;
