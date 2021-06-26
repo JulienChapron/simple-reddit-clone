@@ -5,7 +5,8 @@ const {
   createUser,
   updateUser,
   deleteUser,
-  uploadImage
+  uploadImage,
+  uploadBackground
 } = require('../controllers/users')
 
 const User = require('../models/User')
@@ -16,6 +17,7 @@ const advancedResults = require('../middleware/advancedResults')
 const { protect, authorize } = require('../middleware/auth')
 
 router.route('/:username/image').post(uploadImage)
+router.route('/:username/background').post(uploadBackground)
 
 router
   .route('/')

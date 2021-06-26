@@ -167,7 +167,6 @@ exports.uploadBackground = asyncHandler(async (req, res, next) => {
   }
 
   file.name = `photo-${subreddit._id}${path.parse(file.name).ext}`
-
   file.mv(
     `${process.env.FILE_UPLOAD_PATH}/subreddits/background/${file.name}`,
     async (err) => {

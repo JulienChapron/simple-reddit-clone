@@ -109,3 +109,46 @@ exports.uploadImage = asyncHandler(async (req, res, next) => {
     }
   )
 })
+
+// @desc    Thumbnails user
+// @route   PUT /api/v1/auth/users/:username
+// @access  Private/Admin
+exports.uploadBackground = asyncHandler(async (req, res, next) => {
+  console.log(req.params.username, 'req.params.username')
+  const user = await User.findOne({ username: req.params.username });
+  if (!user)
+    return next(new ErrorResponse(`No user ${req.params.user}`, 404))
+
+  if (!req.files) {
+    return next(new ErrorResponse(`Please upload a file`, 404))
+  }
+
+  const file = req.files.image
+  if (!file.mimetype.startsWith('image')) {
+    return next(new ErrorResponse(`Please upload an image file`, 404))
+  }
+
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new ErrorResponse(
+        `Please upload an image less than ${
+          process.env.MAX_FILE_UPLOAD / 1000 / 1000
+        }mb`,
+        404
+      )
+    )
+  }
+
+  file.name = `photo-${user._id}${path.parse(file.name).ext}`
+  file.mv(
+    `${process.env.FILE_UPLOAD_PATH}/users/background/${file.name}`,
+    async (err) => {
+      if (err) {
+        console.error(err)
+        return next(new ErrorResponse(`Problem with file upload`, 500))
+      }
+      await User.findByIdAndUpdate(user._id, { backgroundUrl: file.name })
+      res.status(200).json({ success: true, data: file.name })
+    }
+  )
+})

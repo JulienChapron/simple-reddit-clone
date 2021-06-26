@@ -34,6 +34,7 @@ const PostsList = (props) => {
     try {
       if (props.environment === 'Home') {
         const response = await getPublic('posts/new');
+        console.log(response.data, 'TE');
         setPosts(response.data);
       } else if (props.environment !== 'subreddit/null') {
         const response = await getPublic('posts/' + props.environment);
@@ -49,8 +50,8 @@ const PostsList = (props) => {
   }, [props.environment]);
   return (
     <div style={{ marginBottom: '20px' }}>
-      {posts !== null && !loading ? (
-        posts.length ? (
+      {!loading ? (
+        posts !== null && posts !== undefined ? (
           posts.map((post, index) => {
             return (
               <div
@@ -67,7 +68,7 @@ const PostsList = (props) => {
                     }}
                   >
                     {props.environment.split('/')[0] === 'user' &&
-                    post.subreddits.length ? (
+                    post.subreddits ? (
                       <span>
                         {post.subreddits.length ? (
                           <img
@@ -82,7 +83,7 @@ const PostsList = (props) => {
                           />
                         ) : undefined}
                         <span
-                          class="post"
+                          className="post"
                           style={{fontWeight:'bold', marginLeft: '5px',marginRight: '10px' }}
                         >
                           subreddit/{post.subreddit}{' '}.{' '}

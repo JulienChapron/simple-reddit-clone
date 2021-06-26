@@ -19,7 +19,6 @@ const SubredditCard = (props) => {
     try {
       const response = await getPublic('subreddits/' + subreddit);
       categories.map((category) => {
-        console.log();
         if (response.data[0].category === category.name.toLowerCase()) {
           setBackgrounColorCategory(category.color);
         }

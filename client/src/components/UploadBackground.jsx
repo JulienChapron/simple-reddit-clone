@@ -45,11 +45,7 @@ const UploadAvatar = (props) => {
       };
       axios
         .post(
-          `http://localhost:4000/api/v1/${
-            props.type === 'user'
-              ? 'users/' + props.user.username
-              : 'subreddits/' + props.data.subreddit
-          }/background`,
+          'http://localhost:4000/api/v1/users/'+ props.data.username+'/background',
           formData,
           config
         )
@@ -122,9 +118,7 @@ const UploadAvatar = (props) => {
         ) : (
           <img
             style={{ width: '100%', height: '100px' }}
-            src={`http://localhost:4000/uploads/${
-              props.type === 'user' ? 'users' : 'subreddits'
-            }/background/${props.data.backgroundUrl}`}
+            src={`http://localhost:4000/uploads/users/background/${props.data.backgroundUrl}`}
             alt="image-subreddit"
           />
         )}
