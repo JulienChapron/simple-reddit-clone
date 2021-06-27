@@ -11,6 +11,7 @@ const path = require("path");
 exports.getPostsFilteredByNew = asyncHandler(async (req, res, next) => {
   const posts = await Post.find()
     .populate({ path: "comments", select: "id" })
+    .populate({ path: "userId", select: "avatarUrl username" })
     .sort("-createdAt");
   res.status(200).json({ success: true, data: posts });
 });

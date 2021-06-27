@@ -30,6 +30,9 @@ const UserSchema = new Schema(
         "Please add a valid email",
       ],
     },
+    subredditsSubscribe: {
+      type: Array,
+    },
     password: {
       type: String,
       required: [true, "Please add a password"],

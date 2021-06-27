@@ -1,34 +1,32 @@
-const express = require('express')
+const express = require("express");
 const {
-  getUsers,
   getUser,
-  createUser,
   updateUser,
   deleteUser,
-  uploadImage,
-  uploadBackground
-} = require('../controllers/users')
+  uploadAvatar,
+  uploadBackground,
+  getSubscribeSubreddit,
+  postSubscribeSubreddit,
+  deleteSubscribeSubreddit,
+} = require("../controllers/users");
 
-const User = require('../models/User')
+const router = express.Router({ mergeParams: true });
 
-const router = express.Router({ mergeParams: true })
-
-const advancedResults = require('../middleware/advancedResults')
-const { protect, authorize } = require('../middleware/auth')
-
-router.route('/:username/image').post(uploadImage)
-router.route('/:username/background').post(uploadBackground)
+const { protect } = require("../middleware/auth");
 
 router
-  .route('/')
-  .get(protect, advancedResults(User), getUsers)
-  .post(protect, createUser)
-
-router
-  .route('/:username')
+  .route("/:username")
   .get(getUser)
-  .put(protect,  updateUser)
-  .delete(protect, deleteUser)
+  .put(protect, updateUser)
+  .delete(protect, deleteUser);
 
+router
+  .route("/:username/subscribeSubreddit")
+  .get(protect, getSubscribeSubreddit)
+  .post(protect, postSubscribeSubreddit)
+  .delete(protect, deleteSubscribeSubreddit);
 
-module.exports = router
+router.route("/:username/avatar").post(protect, uploadAvatar);
+router.route("/:username/background").post(protect, uploadBackground);
+
+module.exports = router;
