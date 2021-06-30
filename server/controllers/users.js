@@ -14,9 +14,8 @@ exports.postSubscribeSubreddit = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`No user with that username of ${req.params.username}`)
     );
   user.subredditsSubscribe.push(req.body.id);
-  console.log(user, 'user')
-  
-  await User.findByIdAndUpdate(req.params.username, user);
+  console.log('passage OK', user)
+  await User.findByIdAndUpdate(user.id, user);
 
   //arraySubredditsSubscribe = user.subredditsSubscribe
   res.status(200).json({ success: true, data: "postSubscribeSubreddit" });

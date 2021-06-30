@@ -19,14 +19,15 @@ router
   .get(getUser)
   .put(protect, updateUser)
   .delete(protect, deleteUser);
-
+router
+  .route("/:username/avatar")
+  .post(protect, uploadAvatar);
+router
+  .route("/:username/background")
+  .post(protect, uploadBackground);
 router
   .route("/:username/subscribeSubreddit")
   .get(protect, getSubscribeSubreddit)
   .post(protect, postSubscribeSubreddit)
   .delete(protect, deleteSubscribeSubreddit);
-
-router.route("/:username/avatar").post(protect, uploadAvatar);
-router.route("/:username/background").post(protect, uploadBackground);
-
 module.exports = router;

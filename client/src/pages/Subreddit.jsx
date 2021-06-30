@@ -3,6 +3,7 @@ import { Container, Col, Row, Button } from 'react-bootstrap';
 import SubredditCard from '../components/SubredditCard';
 import PostsList from '../components/PostsList';
 import EditPost from '../components/EditPost';
+import SubredditHeader from '../components/SubredditHeader';
 import { getPublic } from '../utils/RequestPublic';
 import categories from '../assets/categories/Categories';
 
@@ -15,7 +16,7 @@ const Subreddit = () => {
     setSubredditUrl(params[4]);
     try {
       const response = await getPublic('subreddits/' + params[4]);
-      setSubreddit(response.data);
+      setSubreddit(response.data[0]);
       categories.map((category) => {
         if (response.data[0].category === category.name.toLowerCase()) {
           setBackgrounColorCategory(category.color);
@@ -32,15 +33,7 @@ const Subreddit = () => {
     <div>
       {subreddit && (
         <div>
-          <div
-            style={{ height: '70px', backgroundColor: backgrounColorCategory }}
-          />
-          <div
-            style={{ height: '90px', marginTop: '0px' }}
-            className="card-reddit"
-          >
-            <Container>TEST</Container>
-          </div>
+          <SubredditHeader subreddit={subreddit} backgrounColorCategory={backgrounColorCategory} />
           <Container>
             <Row>
               <Col lg={8} md={12} sm={12}>

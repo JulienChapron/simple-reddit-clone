@@ -51,7 +51,7 @@ const PostsList = (props) => {
   return (
     <div style={{ marginBottom: '20px' }}>
       {!loading ? (
-        posts !== null && posts !== undefined ? (
+        posts !== null && posts !== undefined && posts.length ? (
           posts.map((post, index) => {
             return (
               <div
@@ -84,17 +84,20 @@ const PostsList = (props) => {
                         ) : undefined}
                         <span
                           className="post"
-                          style={{fontWeight:'bold', marginLeft: '5px',marginRight: '10px' }}
+                          style={{
+                            fontWeight: 'bold',
+                            marginLeft: '5px',
+                            marginRight: '10px',
+                          }}
                         >
-                          subreddit/{post.subreddit}{' '}.{' '}
+                          subreddit/{post.subreddit} .{' '}
                         </span>
                       </span>
                     ) : null}
+                    <span>Posted by user/{post.userId.username}</span>
                     <span>
-                      Posted by user/{post.userId.username}
-                    </span>
-                    <span>
-                    {' '}-{' '}<Moment fromNow>{post.createdAt}</Moment>
+                      {' '}
+                      - <Moment fromNow>{post.createdAt}</Moment>
                     </span>
                   </p>
                 </div>

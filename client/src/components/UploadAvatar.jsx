@@ -46,7 +46,7 @@ const SubredditAvatar = (props) => {
             props.type === 'user'
               ? 'users/' + props.data.username
               : 'subreddits/' + props.data.subreddit
-          }/image`,
+          }/avatar`,
           formData,
           config
         )
